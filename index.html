@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Reflex - Luyện Phản Xạ Tiếng Pháp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .logo{
+            font-size: 20px;
+            font-weight: bold;
+            color: #6d6d6d;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 900px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 5px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .tab-btn.active {
+            background: #4299e1;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4299e1, #667eea);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(66, 153, 225, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e53e3e, #fc8181);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #38a169, #68d391);
+        }
+
+        .game-area {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .word-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4299e1, #667eea);
+            transition: width 0.3s ease;
+        }
+
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stats-card {
+            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #4fd1c7;
+        }
+
+        .stats-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        .stats-label {
+            color: #047857;
+            font-weight: bold;
+        }
+
+        .word-list {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .word-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .word-item:hover {
+            background: #edf2f7;
+        }
+
+        .word-item:last-child {
+            border-bottom: none;
+        }
+
+        .delete-btn {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .answer-display {
+            background: #e6fffa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid #4fd1c7;
+        }
+
+        .answer-french {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #065f46;
+            margin-bottom: 10px;
+        }
+
+        .answer-vietnamese {
+            font-size: 1.2em;
+            color: #047857;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .file-input-wrapper:hover {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #38a169;
+        }
+
+        .notification.error {
+            background: #e53e3e;
+        }
+
+        .notification.info {
+            background: #4299e1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .word-display {
+                font-size: 2em;
+            }
+
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="container">
+        <h1>🇫🇷 French Reflex</h1>
+        <i class="logo">(tvtrung)</i>
+        
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="showTab('setup')">Thiết lập</button>
+            <button class="tab-btn" onclick="showTab('vocabulary')">Từ vựng</button>
+            <button class="tab-btn" onclick="showTab('game')">Chơi game</button>
+            <button class="tab-btn" onclick="showTab('stats')">Thống kê</button>
+        </div>
+
+        <!-- Tab Thiết lập -->
+        <div id="setup" class="tab-content active">
+            <div class="settings-grid">
+                <div class="form-group">
+                    <label for="displayTime">Thời gian hiển thị (giây):</label>
+                    <input type="number" id="displayTime" min="0.5" max="10" step="0.1" value="2">
+                </div>
+                <div class="form-group">
+                    <label for="answerDisplayTime">Thời gian hiển thị đáp án (giây):</label>
+                    <input type="number" id="answerDisplayTime" min="1" max="10" step="0.1" value="3">
+                </div>
+				<div class="form-group">
+                    <label for="gameMode">Chế độ chơi:</label>
+                    <select id="gameMode">
+                        <option value="vietnamese-to-french">Tiếng Việt → Tiếng Pháp</option>
+                        <option value="french-to-vietnamese">Tiếng Pháp → Tiếng Việt</option>
+                        <option value="mixed">Trộn lẫn</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="wordInput">Nhập từ vựng (mỗi dòng: Tiếng Việt | Tiếng Pháp):</label>
+                <textarea id="wordInput" placeholder="Ví dụ:
+Xin chào | Bonjour
+Tạm biệt | Au revoir
+Cảm ơn | Merci
+Xin lỗi | Excusez-moi
+Tôi yêu bạn | Je t'aime"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Hoặc tải file JSON:</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="fileInput" accept=".json">
+                    <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
+                </div>
+            </div>
+
+            <button class="btn" onclick="addWords()">Thêm từ vựng</button>
+        </div>
+
+        <!-- Tab Từ vựng -->
+        <div id="vocabulary" class="tab-content">
+            <div class="form-group">
+                <h3 style="margin-bottom: 20px; color: #4a5568;">📚 Danh sách từ vựng</h3>
+                <button class="btn btn-success" onclick="saveToFile()">💾 Lưu danh sách</button>
+                <button class="btn btn-danger" onclick="clearWords()">🗑️ Xóa tất cả</button>
+            </div>
+
+            <div id="wordList" class="word-list"></div>
+            
+            <div style="margin-top: 20px; padding: 20px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #0ea5e9;">
+                <p style="margin: 0; color: #0369a1;">
+                    💡 <strong>Hướng dẫn:</strong> Để thêm từ vựng, hãy chuyển sang tab "Thiết lập" và nhập từ vựng theo định dạng: <strong>Tiếng Việt | Tiếng Pháp</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Tab Chơi game -->
+        <div id="game" class="tab-content">
+            <div class="game-area">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div id="gameDisplay">
+                    <div class="word-display" id="wordDisplay">Nhấn "Bắt đầu" để chơi</div>
+                </div>
+
+                <div class="game-controls">
+                    <button class="btn btn-success" id="startBtn" onclick="startGame()">▶️ Bắt đầu</button>
+                    <button class="btn btn-danger" id="stopBtn" onclick="stopGame()" disabled>⏹️ Dừng</button>
+                </div>
+
+                <div id="answerDisplay" class="answer-display" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- Tab Thống kê -->
+        <div id="stats" class="tab-content">
+            <div class="settings-grid">
+                <div class="stats-card">
+                    <div class="stats-number" id="totalWords">0</div>
+                    <div class="stats-label">Tổng từ vựng</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number" id="totalSessions">0</div>
+                    <div class="stats-label">Lần chơi</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number" id="totalWordsShown">0</div>
+                    <div class="stats-label">Từ đã hiển thị</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number" id="averageTime">0s</div>
+                    <div class="stats-label">Thời gian TB</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-danger" onclick="resetStats()">🔄 Đặt lại thống kê</button>
+        </div>
+    </div>
+
+    <script>
+        let words = [];
+        let currentGameWords = [];
+        let currentWordIndex = 0;
+        let isGameRunning = false;
+        let gameInterval;
+        let gamePhase = 'question'; // 'question' or 'answer'
+        let gameStats = {
+            totalSessions: 0,
+            totalWordsShown: 0,
+            totalTime: 0
+        };
+
+        // Khởi tạo ứng dụng
+        function init() {
+            loadWords();
+            loadStats();
+            updateWordList();
+            updateStats();
+            setupFileInput();
+        }
+
+        // Chuyển đổi tab
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`.tab-btn[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        // Thêm từ vựng
+        function addWords() {
+            const input = document.getElementById('wordInput').value.trim();
+            if (!input) {
+                showNotification('Vui lòng nhập từ vựng!', 'error');
+                return;
+            }
+
+            const lines = input.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                const parts = line.split('|');
+                if (parts.length === 2) {
+                    const vietnamese = parts[0].trim();
+                    const french = parts[1].trim();
+                    
+                    if (vietnamese && french) {
+                        words.push({ vietnamese, french });
+                        addedCount++;
+                    }
+                }
+            });
+
+            if (addedCount > 0) {
+                document.getElementById('wordInput').value = '';
+                saveWords();
+                updateWordList();
+                updateStats();
+                showNotification(`Đã thêm ${addedCount} từ vựng!`, 'success');
+                // Chuyển sang tab Từ vựng để xem kết quả
+                showTab('vocabulary');
+                document.querySelector('.tab-btn[onclick="showTab(\'vocabulary\')"]').classList.add('active');
+                document.querySelector('.tab-btn[onclick="showTab(\'setup\')"]').classList.remove('active');
+            } else {
+                showNotification('Không có từ vựng hợp lệ nào được thêm!', 'error');
+            }
+        }
+
+        // Xóa tất cả từ vựng
+        function clearWords() {
+            if (confirm('Bạn có chắc muốn xóa tất cả từ vựng?')) {
+                words = [];
+                saveWords();
+                updateWordList();
+                updateStats();
+                showNotification('Đã xóa tất cả từ vựng!', 'info');
+            }
+        }
+
+        // Xóa một từ vựng
+        function deleteWord(index) {
+            if (confirm('Bạn có chắc muốn xóa từ này?')) {
+                words.splice(index, 1);
+                saveWords();
+                updateWordList();
+                updateStats();
+                showNotification('Đã xóa từ vựng!', 'info');
+            }
+        }
+
+        // Cập nhật danh sách từ vựng
+        function updateWordList() {
+            const wordListDiv = document.getElementById('wordList');
+            if (words.length === 0) {
+                wordListDiv.innerHTML = '<p style="text-align: center; color: #666;">Chưa có từ vựng nào. Hãy thêm từ vựng để bắt đầu!</p>';
+                return;
+            }
+
+            wordListDiv.innerHTML = words.map((word, index) => `
+                <div class="word-item">
+                    <span><strong>${word.vietnamese}</strong> → ${word.french}</span>
+                    <button class="delete-btn" onclick="deleteWord(${index})">Xóa</button>
+                </div>
+            `).join('');
+        }
+
+        // Bắt đầu game
+        function startGame() {
+            if (words.length === 0) {
+                showNotification('Vui lòng thêm từ vựng trước khi chơi!', 'error');
+                return;
+            }
+
+            isGameRunning = true;
+            gamePhase = 'question';
+            currentWordIndex = 0;
+            currentGameWords = [...words].sort(() => Math.random() - 0.5); // Shuffle
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+
+            gameStats.totalSessions++;
+            saveStats();
+            updateStats();
+
+            showNextWord();
+        }
+
+        // Dừng game
+        function stopGame() {
+            isGameRunning = false;
+            clearInterval(gameInterval);
+            
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+            document.getElementById('answerDisplay').style.display = 'none';
+            
+            document.getElementById('wordDisplay').textContent = 'Game đã dừng';
+            document.getElementById('progressFill').style.width = '0%';
+            
+            showNotification('Game đã dừng!', 'info');
+        }
+
+        // Hiển thị từ tiếp theo
+        function showNextWord() {
+            if (!isGameRunning || currentWordIndex >= currentGameWords.length) {
+                stopGame();
+                showNotification('Đã hoàn thành tất cả từ vựng!', 'success');
+                return;
+            }
+
+            const currentWord = currentGameWords[currentWordIndex];
+            const displayTime = parseFloat(document.getElementById('displayTime').value) * 1000;
+            const answerDisplayTime = parseFloat(document.getElementById('answerDisplayTime').value) * 1000;
+            const gameMode = document.getElementById('gameMode').value;
+
+            if (gamePhase === 'question') {
+                // Ẩn đáp án
+                document.getElementById('answerDisplay').style.display = 'none';
+
+                // Hiển thị từ dựa trên chế độ chơi
+                let displayText = '';
+                if (gameMode === 'vietnamese-to-french') {
+                    displayText = currentWord.vietnamese;
+                } else if (gameMode === 'french-to-vietnamese') {
+                    displayText = currentWord.french;
+                } else { // mixed
+                    displayText = Math.random() > 0.5 ? currentWord.vietnamese : currentWord.french;
+                }
+
+                document.getElementById('wordDisplay').textContent = displayText;
+                
+                // Cập nhật progress bar
+                const progress = ((currentWordIndex + 1) / currentGameWords.length) * 100;
+                document.getElementById('progressFill').style.width = progress + '%';
+
+                // Cập nhật thống kê
+                gameStats.totalWordsShown++;
+                gameStats.totalTime += displayTime;
+                saveStats();
+                updateStats();
+
+                // Chuyển sang phase hiển thị đáp án
+                gamePhase = 'answer';
+                gameInterval = setTimeout(() => {
+                    showCurrentAnswer();
+                }, displayTime);
+
+            } else if (gamePhase === 'answer') {
+                // Chuyển sang từ tiếp theo
+                currentWordIndex++;
+                gamePhase = 'question';
+                gameInterval = setTimeout(() => {
+                    showNextWord();
+                }, answerDisplayTime);
+            }
+        }
+
+        // Hiển thị đáp án của từ hiện tại
+        function showCurrentAnswer() {
+            if (!isGameRunning || currentWordIndex >= currentGameWords.length) return;
+
+            const currentWord = currentGameWords[currentWordIndex];
+            const gameMode = document.getElementById('gameMode').value;
+            const currentDisplay = document.getElementById('wordDisplay').textContent;
+
+            let answerHTML = '';
+            if (gameMode === 'vietnamese-to-french') {
+                answerHTML = `
+                    <div class="answer-french">${currentWord.french}</div>
+                    <div class="answer-vietnamese">${currentWord.vietnamese}</div>
+                `;
+            } else if (gameMode === 'french-to-vietnamese') {
+                answerHTML = `
+                    <div class="answer-french">${currentWord.vietnamese}</div>
+                    <div class="answer-vietnamese">${currentWord.french}</div>
+                `;
+            } else { // mixed
+                if (currentDisplay === currentWord.vietnamese) {
+                    answerHTML = `
+                        <div class="answer-french">${currentWord.french}</div>
+                        <div class="answer-vietnamese">${currentWord.vietnamese}</div>
+                    `;
+                } else {
+                    answerHTML = `
+                        <div class="answer-french">${currentWord.vietnamese}</div>
+                        <div class="answer-vietnamese">${currentWord.french}</div>
+                    `;
+                }
+            }
+
+            document.getElementById('answerDisplay').innerHTML = answerHTML;
+            document.getElementById('answerDisplay').style.display = 'block';
+
+            // Tiếp tục với phase answer
+            showNextWord();
+        }
+
+        // Lưu từ vựng vào localStorage
+        function saveWords() {
+            localStorage.setItem('frenchWords', JSON.stringify(words));
+        }
+
+        // Tải từ vựng từ localStorage
+        function loadWords() {
+            const savedWords = localStorage.getItem('frenchWords');
+            if (savedWords) {
+                words = JSON.parse(savedWords);
+            }
+        }
+
+        // Lưu thống kê
+        function saveStats() {
+            localStorage.setItem('frenchGameStats', JSON.stringify(gameStats));
+        }
+
+        // Tải thống kê
+        function loadStats() {
+            const savedStats = localStorage.getItem('frenchGameStats');
+            if (savedStats) {
+                gameStats = JSON.parse(savedStats);
+            }
+        }
+
+        // Cập nhật hiển thị thống kê
+        function updateStats() {
+            document.getElementById('totalWords').textContent = words.length;
+            document.getElementById('totalSessions').textContent = gameStats.totalSessions;
+            document.getElementById('totalWordsShown').textContent = gameStats.totalWordsShown;
+            
+            const avgTime = gameStats.totalWordsShown > 0 ? 
+                (gameStats.totalTime / gameStats.totalWordsShown / 1000).toFixed(1) : 0;
+            document.getElementById('averageTime').textContent = avgTime + 's';
+        }
+
+        // Đặt lại thống kê
+        function resetStats() {
+            if (confirm('Bạn có chắc muốn đặt lại tất cả thống kê?')) {
+                gameStats = {
+                    totalSessions: 0,
+                    totalWordsShown: 0,
+                    totalTime: 0
+                };
+                saveStats();
+                updateStats();
+                showNotification('Đã đặt lại thống kê!', 'info');
+            }
+        }
+
+        // Lưu danh sách từ vựng ra file JSON
+        function saveToFile() {
+            if (words.length === 0) {
+                showNotification('Không có từ vựng nào để lưu!', 'error');
+                return;
+            }
+
+            const dataStr = JSON.stringify(words, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = 'french-vocabulary.json';
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showNotification('Đã lưu file thành công!', 'success');
+        }
+
+        // Thiết lập file input
+        function setupFileInput() {
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', handleFileSelect);
+        }
+
+        // Xử lý file được chọn
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/json') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedWords = JSON.parse(e.target.result);
+                        if (Array.isArray(importedWords)) {
+                            words = importedWords;
+                            saveWords();
+                            updateWordList();
+                            updateStats();
+                            showNotification(`Đã tải ${words.length} từ vựng!`, 'success');
+                            // Chuyển sang tab Từ vựng để xem kết quả
+                            showTab('vocabulary');
+                            document.querySelector('.tab-btn[onclick="showTab(\'vocabulary\')"]').classList.add('active');
+                            document.querySelector('.tab-btn[onclick="showTab(\'setup\')"]').classList.remove('active');
+                        } else {
+                            showNotification('File JSON không đúng định dạng!', 'error');
+                        }
+                    } catch (error) {
+                        showNotification('Lỗi khi đọc file JSON!', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            } else {
+                showNotification('Vui lòng chọn file JSON!', 'error');
+            }
+        }
+
+        // Hiển thị thông báo
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Khởi tạo ứng dụng khi trang web được tải
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
