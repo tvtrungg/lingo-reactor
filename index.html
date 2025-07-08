@@ -45,6 +45,18 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .create-collection{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .create-collection .form-group{
+            flex: 1;
+        }
+
         .tab-buttons {
             display: flex;
             justify-content: center;
@@ -397,6 +409,11 @@
             .settings-grid {
                 grid-template-columns: 1fr;
             }
+
+            .create-collection {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
@@ -438,15 +455,17 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="collectionSelect">Chọn Collection:</label>
-                <select id="collectionSelect">
-                    <option value="">-- Chọn hoặc tạo mới --</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="newCollectionName">Tên Collection mới (nếu có):</label>
-                <input type="text" id="newCollectionName" placeholder="Nhập tên Collection mới">
+            <div class="create-collection">
+                <div class="form-group">
+                    <label for="collectionSelect">Chọn Collection:</label>
+                    <select id="collectionSelect">
+                        <option value="">-- Chọn hoặc tạo mới --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="newCollectionName">Tên Collection mới (nếu có):</label>
+                    <input type="text" id="newCollectionName" placeholder="Nhập tên Collection mới">
+                </div>
             </div>
             <div class="form-group">
                 <label for="wordInput">Nhập từ vựng (mỗi dòng: Tiếng Việt | Tiếng Pháp):</label>
