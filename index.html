@@ -133,8 +133,8 @@
             background: linear-gradient(45deg, #4299e1, #667eea);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
+            padding: 12px 28px;
+            border-radius: 8px;
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -174,7 +174,7 @@
         }
 
         .word-display {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
             color: #2d3748;
             margin-bottom: 20px;
@@ -223,23 +223,44 @@
         }
 
         .stats-card {
-            background: linear-gradient(135deg, #e6fffa, #b2f5ea);
-            border-radius: 15px;
-            padding: 20px;
+            background: linear-gradient(135deg, #e9d5ff, #d8b4fe);
+            border-radius: 12px;
+            padding: 25px;
             text-align: center;
-            border: 2px solid #4fd1c7;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .stats-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #065f46;
-            margin-bottom: 10px;
+            font-size: 2.2em;
+            font-weight: 600;
+            color: #5b21b6;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .stats-label {
-            color: #047857;
-            font-weight: bold;
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stats-icon {
+            font-size: 2rem;
+            color: #7c3aed;
         }
 
         .collection-list,
@@ -258,9 +279,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
             padding: 10px;
             border-bottom: 1px solid #e2e8f0;
             transition: background-color 0.3s ease;
+        }
+
+        .word-item .word-checkbox{
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .word-item .word-text{
+            flex: 1;
         }
 
         .collection-item:hover,
@@ -357,6 +389,40 @@
             background: #4299e1;
         }
 
+        .edit-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .edit-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .edit-form input {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #e2e8f0;
+            border-radius: 5px;
+        }
+
+        .edit-form .btn {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+
+        .word-checkbox {
+            margin-right: 10px;
+        }
+
         .modal {
             position: fixed;
             top: 0;
@@ -374,7 +440,7 @@
             background: white;
             border-radius: 15px;
             padding: 20px;
-            max-width: 900px;
+            max-width: 1000px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -399,7 +465,7 @@
             }
 
             .word-display {
-                font-size: 2em;
+                font-size: 1.5em;
             }
 
             .tab-buttons {
@@ -425,7 +491,7 @@
 
         <div class="tab-buttons">
             <button class="tab-btn active" onclick="showTab('setup')">Thiết lập</button>
-            <button class="tab-btn" onclick="showTab('collection')">Collection</button>
+            <button class="tab-btn" onclick="showTab('collection')">Bộ sưu tập</button>
             <button class="tab-btn" onclick="showTab('game')">Chơi game</button>
             <button class="tab-btn" onclick="showTab('stats')">Thống kê</button>
         </div>
@@ -434,14 +500,14 @@
         <div id="setup" class="tab-content active">
             <div class="create-collection">
                 <div class="form-group">
-                    <label for="collectionSelect">Chọn Collection:</label>
+                    <label for="collectionSelect">Chọn Bộ sưu tập:</label>
                     <select id="collectionSelect">
                         <option value="">-- Chọn hoặc tạo mới --</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="newCollectionName">Tên Collection mới (nếu có):</label>
-                    <input type="text" id="newCollectionName" placeholder="Nhập tên Collection mới">
+                    <label for="newCollectionName">Tên Bộ sưu tập mới (nếu có):</label>
+                    <input type="text" id="newCollectionName" placeholder="Nhập tên Bộ sưu tập mới">
                 </div>
             </div>
             <div class="form-group">
@@ -465,10 +531,10 @@ Tôi yêu bạn | Je t'aime"></textarea>
             <button class="btn" onclick="addWords()">Thêm từ vựng</button>
         </div>
 
-        <!-- Tab Collection -->
+        <!-- Tab Bộ sưu tập -->
         <div id="collection" class="tab-content">
             <div class="form-group">
-                <h3 style="margin-bottom: 20px; color: #4a5568;">📚 Danh sách Collection</h3>
+                <h3 style="margin-bottom: 20px; color: #4a5568;">📚 Danh sách Bộ sưu tập</h3>
                 <button class="btn btn-success" onclick="saveToFile()">💾 Lưu danh sách</button>
                 <button class="btn btn-danger" onclick="clearCollections()">🗑️ Xóa tất cả</button>
             </div>
@@ -478,7 +544,7 @@ Tôi yêu bạn | Je t'aime"></textarea>
             <div
                 style="margin-top: 20px; padding: 20px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #0ea5e9;">
                 <p style="margin: 0; color: #0369a1;">
-                    💡 <strong>Hướng dẫn:</strong> Nhấp vào một Collection để xem từ vựng. Để thêm từ vựng, hãy chuyển
+                    💡 <strong>Hướng dẫn:</strong> Nhấp vào một Bộ sưu tập để xem từ vựng. Để thêm từ vựng, hãy chuyển
                     sang tab "Thiết lập" và nhập từ vựng theo định dạng: <strong>Tiếng Việt | Tiếng Pháp</strong>
                 </p>
             </div>
@@ -510,7 +576,7 @@ Tôi yêu bạn | Je t'aime"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="gameCollectionSelect">Chọn Collection để chơi:</label>
+                <label for="gameCollectionSelect">Chọn Bộ sưu tập để chơi:</label>
                 <select id="gameCollectionSelect">
                     <option value="">-- Tất cả từ vựng --</option>
                 </select>
@@ -535,25 +601,26 @@ Tôi yêu bạn | Je t'aime"></textarea>
 
         <!-- Tab Thống kê -->
         <div id="stats" class="tab-content">
+            <h3 style="margin-bottom: 20px; color: #4a5568; text-align: left;">📊 Thống kê học tập</h3>
             <div class="settings-grid">
                 <div class="stats-card">
-                    <div class="stats-number" id="totalWords">0</div>
+                    <div class="stats-number"><span class="stats-icon">📚</span><span id="totalWords">0</span></div>
                     <div class="stats-label">Tổng từ vựng</div>
                 </div>
                 <div class="stats-card">
-                    <div class="stats-number" id="totalCollections">0</div>
-                    <div class="stats-label">Tổng Collection</div>
+                    <div class="stats-number"><span class="stats-icon">🗂️</span><span id="totalCollections">0</span></div>
+                    <div class="stats-label">Tổng Bộ sưu tập</div>
                 </div>
                 <div class="stats-card">
-                    <div class="stats-number" id="totalSessions">0</div>
+                    <div class="stats-number"><span class="stats-icon">🎮</span><span id="totalSessions">0</span></div>
                     <div class="stats-label">Lần chơi</div>
                 </div>
                 <div class="stats-card">
-                    <div class="stats-number" id="totalWordsShown">0</div>
+                    <div class="stats-number"><span class="stats-icon">🔍</span><span id="totalWordsShown">0</span></div>
                     <div class="stats-label">Từ đã hiển thị</div>
                 </div>
                 <div class="stats-card">
-                    <div class="stats-number" id="averageTime">0s</div>
+                    <div class="stats-number"><span class="stats-icon">⏱️</span><span id="averageTime">0s</span></div>
                     <div class="stats-label">Thời gian TB</div>
                 </div>
             </div>
@@ -564,6 +631,9 @@ Tôi yêu bạn | Je t'aime"></textarea>
             <div class="modal-content">
                 <span class="modal-close" onclick="closeModal()">&times;</span>
                 <h3 id="modalTitle" style="margin-bottom: 20px; color: #4a5568;"></h3>
+                <div class="form-group">
+                    <button class="btn btn-danger" onclick="deleteSelectedWords()" style="display: none;" id="deleteSelectedBtn">🗑️ Xóa các từ đã chọn</button>
+                </div>
                 <div id="modalWordList" class="word-list"></div>
             </div>
         </div>
@@ -629,9 +699,9 @@ Tôi yêu bạn | Je t'aime"></textarea>
                     name: newCollectionName,
                     words: []
                 });
-                showNotification(`Đã tạo Collection mới: ${newCollectionName}`, 'success');
+                showNotification(`Đã tạo Bộ sưu tập mới: ${newCollectionName}`, 'success');
             } else if (!collectionSelect) {
-                showNotification('Vui lòng chọn hoặc tạo mới một Collection!', 'error');
+                showNotification('Vui lòng chọn hoặc tạo mới một Bộ sưu tập!', 'error');
                 return;
             }
 
@@ -668,16 +738,16 @@ Tôi yêu bạn | Je t'aime"></textarea>
                 updateCollectionList();
                 updateCollectionSelects();
                 updateStats();
-                showNotification(`Đã thêm ${addedCount} từ vựng vào Collection!`, 'success');
+                showNotification(`Đã thêm ${addedCount} từ vựng vào Bộ sưu tập!`, 'success');
                 showTab('collection');
             } else {
                 showNotification('Không có từ vựng hợp lệ nào được thêm!', 'error');
             }
         }
 
-        // Xóa tất cả Collection
+        // Xóa tất cả Bộ sưu tập
         function clearCollections() {
-            if (confirm('Bạn có chắc muốn xóa tất cả Collection?')) {
+            if (confirm('Bạn có chắc muốn xóa tất cả Bộ sưu tập?')) {
                 collections = [];
                 words = [];
                 saveCollections();
@@ -685,13 +755,13 @@ Tôi yêu bạn | Je t'aime"></textarea>
                 updateCollectionList();
                 updateCollectionSelects();
                 updateStats();
-                showNotification('Đã xóa tất cả Collection!', 'info');
+                showNotification('Đã xóa tất cả Bộ sưu tập!', 'info');
             }
         }
 
-        // Xóa một Collection
+        // Xóa một Bộ sưu tập
         function deleteCollection(id) {
-            if (confirm('Bạn có chắc muốn xóa Collection này?')) {
+            if (confirm('Bạn có chắc muốn xóa Bộ sưu tập này?')) {
                 collections = collections.filter(c => c.id !== id);
                 words = words.filter(w => !collections.some(c => c.words.some(cw => cw.vietnamese === w.vietnamese && cw.french === w.french)));
                 saveCollections();
@@ -699,12 +769,12 @@ Tôi yêu bạn | Je t'aime"></textarea>
                 updateCollectionList();
                 updateCollectionSelects();
                 updateStats();
-                showNotification('Đã xóa Collection!', 'info');
+                showNotification('Đã xóa Bộ sưu tập!', 'info');
             }
         }
 
-        // Xóa một từ vựng
-        function deleteWord(collectionId, index) {
+                // Xóa một từ vựng
+                function deleteWord(collectionId, index) {
             if (confirm('Bạn có chắc muốn xóa từ này?')) {
                 const collection = collections.find(c => c.id === collectionId);
                 if (collection) {
@@ -712,18 +782,18 @@ Tôi yêu bạn | Je t'aime"></textarea>
                     words = words.filter(w => !(w.vietnamese === removedWord.vietnamese && w.french === removedWord.french));
                     saveCollections();
                     saveWords();
-                    updateCollectionList();
                     updateStats();
+                    showCollectionWords(collectionId); // Refresh modal
                     showNotification('Đã xóa từ vựng!', 'info');
                 }
             }
         }
 
-        // Cập nhật danh sách Collection
+        // Cập nhật danh sách Bộ sưu tập
         function updateCollectionList() {
             const collectionListDiv = document.getElementById('collectionList');
             if (collections.length === 0) {
-                collectionListDiv.innerHTML = '<p style="text-align: center; color: #666;">Chưa có Collection nào. Hãy thêm từ vựng để tạo!</p>';
+                collectionListDiv.innerHTML = '<p style="text-align: center; color: #666;">Chưa có Bộ sưu tập nào. Hãy thêm từ vựng để tạo!</p>';
                 return;
             }
 
@@ -737,8 +807,8 @@ Tôi yêu bạn | Je t'aime"></textarea>
             `).join('');
         }
 
-        // Hiển thị từ vựng trong Collection qua Modal
-        function showCollectionWords(collectionId) {
+               // Hiển thị từ vựng trong Bộ sưu tập qua Modal
+               function showCollectionWords(collectionId) {
             const collection = collections.find(c => c.id === collectionId);
             if (!collection) return;
 
@@ -748,24 +818,135 @@ Tôi yêu bạn | Je t'aime"></textarea>
 
             modalTitle.textContent = collection.name;
             modalWordList.innerHTML = collection.words.length === 0 ?
-                '<p style="text-align: center; color: #666;">Chưa có từ vựng trong Collection này.</p>' :
+                '<p style="text-align: center; color: #666;">Chưa có từ vựng trong Bộ sưu tập này.</p>' :
                 collection.words.map((word, index) => `
-                    <div class="word-item">
-                        <span><strong>${word.vietnamese}</strong> → ${word.french}</span>
-                        <button class="delete-btn" onclick="deleteWord('${collectionId}', ${index}); closeModal();">Xóa</button>
+                                        <div class="word-item" id="word-item-${collectionId}-${index}">
+                        <input type="checkbox" class="word-checkbox" data-collection-id="${collectionId}" data-index="${index}">
+                        <span class="word-text"><strong>${word.vietnamese}</strong> → ${word.french}</span>
+                        <div>
+                            <button class="edit-btn" onclick="editWord('${collectionId}', ${index})">Sửa</button>
+                            <button class="delete-btn" onclick="deleteWord('${collectionId}', ${index})">Xóa</button>
+                        </div>
                     </div>
                 `).join('');
 
             modal.style.display = 'flex';
+                        // Thêm sự kiện cho checkbox
+                        document.querySelectorAll('.word-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', updateDeleteSelectedButton);
+            });
+            updateDeleteSelectedButton();
+        }
+
+        // Chỉnh sửa từ vựng
+        function editWord(collectionId, index) {
+            const collection = collections.find(c => c.id === collectionId);
+            if (!collection) return;
+
+            const word = collection.words[index];
+            const wordItem = document.getElementById(`word-item-${collectionId}-${index}`);
+            wordItem.innerHTML = `
+                <div class="edit-form">
+                    <input type="text" id="edit-vietnamese-${collectionId}-${index}" value="${word.vietnamese}">
+                    <span> → </span>
+                    <input type="text" id="edit-french-${collectionId}-${index}" value="${word.french}">
+                    <div>
+                        <button class="btn btn-success" onclick="saveWord('${collectionId}', ${index})">Lưu</button>
+                        <button class="btn btn-danger" onclick="showCollectionWords('${collectionId}')">Hủy</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Lưu từ vựng sau khi chỉnh sửa
+        function saveWord(collectionId, index) {
+            const collection = collections.find(c => c.id === collectionId);
+            if (!collection) return;
+
+            const vietnamese = document.getElementById(`edit-vietnamese-${collectionId}-${index}`).value.trim();
+            const french = document.getElementById(`edit-french-${collectionId}-${index}`).value.trim();
+
+            if (vietnamese && french) {
+                const oldWord = collection.words[index];
+                collection.words[index] = { vietnamese, french };
+
+                // Cập nhật danh sách words tổng
+                const wordIndex = words.findIndex(w => w.vietnamese === oldWord.vietnamese && w.french === oldWord.french);
+                if (wordIndex !== -1) {
+                    words[wordIndex] = { vietnamese, french };
+                } else {
+                    words.push({ vietnamese, french });
+                }
+
+                saveCollections();
+                saveWords();
+                updateStats();
+                showCollectionWords(collectionId);
+                showNotification('Đã cập nhật từ vựng!', 'success');
+            } else {
+                showNotification('Vui lòng nhập đầy đủ từ vựng!', 'error');
+            }
+        }
+                // Xóa các từ được chọn
+                function deleteSelectedWords() {
+            const checkboxes = document.querySelectorAll('.word-checkbox:checked');
+            if (checkboxes.length === 0) {
+                showNotification('Vui lòng chọn ít nhất một từ để xóa!', 'error');
+                return;
+            }
+
+            if (confirm(`Bạn có chắc muốn xóa ${checkboxes.length} từ đã chọn?`)) {
+                const collectionUpdates = {};
+                checkboxes.forEach(checkbox => {
+                    const collectionId = checkbox.getAttribute('data-collection-id');
+                    const index = parseInt(checkbox.getAttribute('data-index'));
+
+                    if (!collectionUpdates[collectionId]) {
+                        collectionUpdates[collectionId] = [];
+                    }
+                    collectionUpdates[collectionId].push(index);
+                });
+
+                Object.keys(collectionUpdates).forEach(collectionId => {
+                    const collection = collections.find(c => c.id === collectionId);
+                    if (collection) {
+                        const indices = collectionUpdates[collectionId].sort((a, b) => b - a);
+                        indices.forEach(index => {
+                            const [removedWord] = collection.words.splice(index, 1);
+                            words = words.filter(w => !(w.vietnamese === removedWord.vietnamese && w.french === removedWord.french));
+                        });
+                    }
+                });
+
+                saveCollections();
+                saveWords();
+                updateStats();
+                showCollectionWords(Object.keys(collectionUpdates)[0]); // Refresh modal with the first updated collection
+                showNotification(`Đã xóa ${checkboxes.length} từ vựng!`, 'info');
+            }
+        }
+
+        // Cập nhật trạng thái nút xóa nhiều từ
+        function updateDeleteSelectedButton() {
+            const deleteBtn = document.getElementById('deleteSelectedBtn');
+            const checkboxes = document.querySelectorAll('.word-checkbox:checked');
+            deleteBtn.style.display = checkboxes.length > 0 ? 'inline-block' : 'none';
         }
 
         // Đóng Modal
         function closeModal() {
             document.getElementById('collectionModal').style.display = 'none';
-            updateCollectionList(); // Cập nhật lại danh sách Collection khi đóng modal
+            updateCollectionList(); // Cập nhật lại danh sách Bộ sưu tập khi đóng modal
         }
 
-        // Cập nhật danh sách Collection trong select box
+                // Đóng Modal khi nhấp ra ngoài
+                document.getElementById('collectionModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+
+        // Cập nhật danh sách Bộ sưu tập trong select box
         function updateCollectionSelects() {
             const collectionSelect = document.getElementById('collectionSelect');
             const gameCollectionSelect = document.getElementById('gameCollectionSelect');
@@ -986,7 +1167,7 @@ Tôi yêu bạn | Je t'aime"></textarea>
         // Lưu danh sách từ vựng ra file JSON
         function saveToFile() {
             if (collections.length === 0) {
-                showNotification('Không có Collection nào để lưu!', 'error');
+                showNotification('Không có Bộ sưu tập nào để lưu!', 'error');
                 return;
             }
 
@@ -1031,7 +1212,7 @@ Tôi yêu bạn | Je t'aime"></textarea>
                             updateCollectionList();
                             updateCollectionSelects();
                             updateStats();
-                            showNotification(`Đã tải ${collections.length} Collection!`, 'success');
+                            showNotification(`Đã tải ${collections.length} Bộ sưu tập!`, 'success');
                             showTab('collection');
                         } else {
                             showNotification('File JSON không đúng định dạng!', 'error');
