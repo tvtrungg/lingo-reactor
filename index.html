@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,7 @@
             color: #333;
         }
 
-        .logo{
+        .logo {
             font-size: 20px;
             font-weight: bold;
             color: #6d6d6d;
@@ -31,7 +32,7 @@
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             padding: 40px;
             max-width: 900px;
             width: 90%;
@@ -41,7 +42,7 @@
         h1 {
             color: #4a5568;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .tab-buttons {
@@ -91,7 +92,9 @@
             color: #4a5568;
         }
 
-        input, textarea, select {
+        input,
+        textarea,
+        select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e2e8f0;
@@ -100,7 +103,9 @@
             transition: border-color 0.3s ease;
         }
 
-        input:focus, textarea:focus, select:focus {
+        input:focus,
+        textarea:focus,
+        select:focus {
             outline: none;
             border-color: #4299e1;
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
@@ -160,13 +165,20 @@
             font-weight: bold;
             color: #2d3748;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             animation: fadeIn 0.5s ease-in;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .progress-bar {
@@ -218,16 +230,18 @@
             font-weight: bold;
         }
 
+        .collection-list,
         .word-list {
             background: #f7fafc;
             border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
             text-align: left;
-            max-height: 300px;
+            max-height: 500px;
             overflow-y: auto;
         }
 
+        .collection-item,
         .word-item {
             display: flex;
             justify-content: space-between;
@@ -237,10 +251,12 @@
             transition: background-color 0.3s ease;
         }
 
+        .collection-item:hover,
         .word-item:hover {
             background: #edf2f7;
         }
 
+        .collection-item:last-child,
         .word-item:last-child {
             border-bottom: none;
         }
@@ -329,6 +345,41 @@
             background: #4299e1;
         }
 
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #4a5568;
+        }
+
+        .modal-close:hover {
+            color: #e53e3e;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -349,15 +400,15 @@
         }
     </style>
 </head>
+
 <body>
-   
     <div class="container">
         <h1>🇫🇷 French Reflex</h1>
         <i class="logo">(tvtrung)</i>
-        
+
         <div class="tab-buttons">
             <button class="tab-btn active" onclick="showTab('setup')">Thiết lập</button>
-            <button class="tab-btn" onclick="showTab('vocabulary')">Từ vựng</button>
+            <button class="tab-btn" onclick="showTab('collection')">Collection</button>
             <button class="tab-btn" onclick="showTab('game')">Chơi game</button>
             <button class="tab-btn" onclick="showTab('stats')">Thống kê</button>
         </div>
@@ -373,7 +424,7 @@
                     <label for="answerDisplayTime">Thời gian hiển thị đáp án (giây):</label>
                     <input type="number" id="answerDisplayTime" min="1" max="10" step="0.1" value="3">
                 </div>
-				<div class="form-group">
+                <div class="form-group">
                     <label for="gameMode">Chế độ chơi:</label>
                     <select id="gameMode">
                         <option value="vietnamese-to-french">Tiếng Việt → Tiếng Pháp</option>
@@ -381,8 +432,22 @@
                         <option value="mixed">Trộn lẫn</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="repeatCount">Số lần lặp mỗi từ:</label>
+                    <input type="number" id="repeatCount" min="1" max="10" value="1">
+                </div>
             </div>
 
+            <div class="form-group">
+                <label for="collectionSelect">Chọn Collection:</label>
+                <select id="collectionSelect">
+                    <option value="">-- Chọn hoặc tạo mới --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="newCollectionName">Tên Collection mới (nếu có):</label>
+                <input type="text" id="newCollectionName" placeholder="Nhập tên Collection mới">
+            </div>
             <div class="form-group">
                 <label for="wordInput">Nhập từ vựng (mỗi dòng: Tiếng Việt | Tiếng Pháp):</label>
                 <textarea id="wordInput" placeholder="Ví dụ:
@@ -404,30 +469,38 @@ Tôi yêu bạn | Je t'aime"></textarea>
             <button class="btn" onclick="addWords()">Thêm từ vựng</button>
         </div>
 
-        <!-- Tab Từ vựng -->
-        <div id="vocabulary" class="tab-content">
+        <!-- Tab Collection -->
+        <div id="collection" class="tab-content">
             <div class="form-group">
-                <h3 style="margin-bottom: 20px; color: #4a5568;">📚 Danh sách từ vựng</h3>
+                <h3 style="margin-bottom: 20px; color: #4a5568;">📚 Danh sách Collection</h3>
                 <button class="btn btn-success" onclick="saveToFile()">💾 Lưu danh sách</button>
-                <button class="btn btn-danger" onclick="clearWords()">🗑️ Xóa tất cả</button>
+                <button class="btn btn-danger" onclick="clearCollections()">🗑️ Xóa tất cả</button>
             </div>
 
-            <div id="wordList" class="word-list"></div>
-            
-            <div style="margin-top: 20px; padding: 20px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #0ea5e9;">
+            <div id="collectionList" class="collection-list"></div>
+
+            <div
+                style="margin-top: 20px; padding: 20px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #0ea5e9;">
                 <p style="margin: 0; color: #0369a1;">
-                    💡 <strong>Hướng dẫn:</strong> Để thêm từ vựng, hãy chuyển sang tab "Thiết lập" và nhập từ vựng theo định dạng: <strong>Tiếng Việt | Tiếng Pháp</strong>
+                    💡 <strong>Hướng dẫn:</strong> Nhấp vào một Collection để xem từ vựng. Để thêm từ vựng, hãy chuyển
+                    sang tab "Thiết lập" và nhập từ vựng theo định dạng: <strong>Tiếng Việt | Tiếng Pháp</strong>
                 </p>
             </div>
         </div>
 
         <!-- Tab Chơi game -->
         <div id="game" class="tab-content">
+            <div class="form-group">
+                <label for="gameCollectionSelect">Chọn Collection để chơi:</label>
+                <select id="gameCollectionSelect">
+                    <option value="">-- Tất cả từ vựng --</option>
+                </select>
+            </div>
             <div class="game-area">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                
+
                 <div id="gameDisplay">
                     <div class="word-display" id="wordDisplay">Nhấn "Bắt đầu" để chơi</div>
                 </div>
@@ -449,6 +522,10 @@ Tôi yêu bạn | Je t'aime"></textarea>
                     <div class="stats-label">Tổng từ vựng</div>
                 </div>
                 <div class="stats-card">
+                    <div class="stats-number" id="totalCollections">0</div>
+                    <div class="stats-label">Tổng Collection</div>
+                </div>
+                <div class="stats-card">
                     <div class="stats-number" id="totalSessions">0</div>
                     <div class="stats-label">Lần chơi</div>
                 </div>
@@ -461,12 +538,20 @@ Tôi yêu bạn | Je t'aime"></textarea>
                     <div class="stats-label">Thời gian TB</div>
                 </div>
             </div>
-            
+
             <button class="btn btn-danger" onclick="resetStats()">🔄 Đặt lại thống kê</button>
+        </div>
+        <div id="collectionModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <h3 id="modalTitle" style="margin-bottom: 20px; color: #4a5568;"></h3>
+                <div id="modalWordList" class="word-list"></div>
+            </div>
         </div>
     </div>
 
     <script>
+        let collections = [];
         let words = [];
         let currentGameWords = [];
         let currentWordIndex = 0;
@@ -481,9 +566,10 @@ Tôi yêu bạn | Je t'aime"></textarea>
 
         // Khởi tạo ứng dụng
         function init() {
-            loadWords();
+            loadCollections();
             loadStats();
-            updateWordList();
+            updateCollectionList();
+            updateCollectionSelects();
             updateStats();
             setupFileInput();
         }
@@ -496,16 +582,37 @@ Tôi yêu bạn | Je t'aime"></textarea>
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
+
             document.getElementById(tabName).classList.add('active');
             document.querySelector(`.tab-btn[onclick="showTab('${tabName}')"]`).classList.add('active');
+
+            if (tabName === 'collection') {
+                updateCollectionList();
+            }
         }
 
         // Thêm từ vựng
         function addWords() {
             const input = document.getElementById('wordInput').value.trim();
+            const collectionSelect = document.getElementById('collectionSelect').value;
+            const newCollectionName = document.getElementById('newCollectionName').value.trim();
+
             if (!input) {
                 showNotification('Vui lòng nhập từ vựng!', 'error');
+                return;
+            }
+
+            let collectionId = collectionSelect;
+            if (newCollectionName && !collectionSelect) {
+                collectionId = Date.now().toString();
+                collections.push({
+                    id: collectionId,
+                    name: newCollectionName,
+                    words: []
+                });
+                showNotification(`Đã tạo Collection mới: ${newCollectionName}`, 'success');
+            } else if (!collectionSelect) {
+                showNotification('Vui lòng chọn hoặc tạo mới một Collection!', 'error');
                 return;
             }
 
@@ -517,70 +624,147 @@ Tôi yêu bạn | Je t'aime"></textarea>
                 if (parts.length === 2) {
                     const vietnamese = parts[0].trim();
                     const french = parts[1].trim();
-                    
+
                     if (vietnamese && french) {
-                        words.push({ vietnamese, french });
-                        addedCount++;
+                        const word = { vietnamese, french };
+                        const collection = collections.find(c => c.id === collectionId);
+                        if (collection) {
+                            if (!collection.words.some(w => w.vietnamese === vietnamese && w.french === french)) {
+                                collection.words.push(word);
+                                addedCount++;
+                            }
+                        }
+                        if (!words.some(w => w.vietnamese === vietnamese && w.french === french)) {
+                            words.push(word);
+                        }
                     }
                 }
             });
 
             if (addedCount > 0) {
                 document.getElementById('wordInput').value = '';
+                document.getElementById('newCollectionName').value = '';
+                saveCollections();
                 saveWords();
-                updateWordList();
+                updateCollectionList();
+                updateCollectionSelects();
                 updateStats();
-                showNotification(`Đã thêm ${addedCount} từ vựng!`, 'success');
-                // Chuyển sang tab Từ vựng để xem kết quả
-                showTab('vocabulary');
-                document.querySelector('.tab-btn[onclick="showTab(\'vocabulary\')"]').classList.add('active');
-                document.querySelector('.tab-btn[onclick="showTab(\'setup\')"]').classList.remove('active');
+                showNotification(`Đã thêm ${addedCount} từ vựng vào Collection!`, 'success');
+                showTab('collection');
             } else {
                 showNotification('Không có từ vựng hợp lệ nào được thêm!', 'error');
             }
         }
 
-        // Xóa tất cả từ vựng
-        function clearWords() {
-            if (confirm('Bạn có chắc muốn xóa tất cả từ vựng?')) {
+        // Xóa tất cả Collection
+        function clearCollections() {
+            if (confirm('Bạn có chắc muốn xóa tất cả Collection?')) {
+                collections = [];
                 words = [];
+                saveCollections();
                 saveWords();
-                updateWordList();
+                updateCollectionList();
+                updateCollectionSelects();
                 updateStats();
-                showNotification('Đã xóa tất cả từ vựng!', 'info');
+                showNotification('Đã xóa tất cả Collection!', 'info');
+            }
+        }
+
+        // Xóa một Collection
+        function deleteCollection(id) {
+            if (confirm('Bạn có chắc muốn xóa Collection này?')) {
+                collections = collections.filter(c => c.id !== id);
+                words = words.filter(w => !collections.some(c => c.words.some(cw => cw.vietnamese === w.vietnamese && cw.french === w.french)));
+                saveCollections();
+                saveWords();
+                updateCollectionList();
+                updateCollectionSelects();
+                updateStats();
+                showNotification('Đã xóa Collection!', 'info');
             }
         }
 
         // Xóa một từ vựng
-        function deleteWord(index) {
+        function deleteWord(collectionId, index) {
             if (confirm('Bạn có chắc muốn xóa từ này?')) {
-                words.splice(index, 1);
-                saveWords();
-                updateWordList();
-                updateStats();
-                showNotification('Đã xóa từ vựng!', 'info');
+                const collection = collections.find(c => c.id === collectionId);
+                if (collection) {
+                    const [removedWord] = collection.words.splice(index, 1);
+                    words = words.filter(w => !(w.vietnamese === removedWord.vietnamese && w.french === removedWord.french));
+                    saveCollections();
+                    saveWords();
+                    updateCollectionList();
+                    updateStats();
+                    showNotification('Đã xóa từ vựng!', 'info');
+                }
             }
         }
 
-        // Cập nhật danh sách từ vựng
-        function updateWordList() {
-            const wordListDiv = document.getElementById('wordList');
-            if (words.length === 0) {
-                wordListDiv.innerHTML = '<p style="text-align: center; color: #666;">Chưa có từ vựng nào. Hãy thêm từ vựng để bắt đầu!</p>';
+        // Cập nhật danh sách Collection
+        function updateCollectionList() {
+            const collectionListDiv = document.getElementById('collectionList');
+            if (collections.length === 0) {
+                collectionListDiv.innerHTML = '<p style="text-align: center; color: #666;">Chưa có Collection nào. Hãy thêm từ vựng để tạo!</p>';
                 return;
             }
 
-            wordListDiv.innerHTML = words.map((word, index) => `
-                <div class="word-item">
-                    <span><strong>${word.vietnamese}</strong> → ${word.french}</span>
-                    <button class="delete-btn" onclick="deleteWord(${index})">Xóa</button>
+            collectionListDiv.innerHTML = collections.map(collection => `
+                <div class="collection-item" onclick="showCollectionWords('${collection.id}')" style="cursor: pointer;">
+                    <span >
+                        <strong>${collection.name}</strong> (${collection.words.length} từ)
+                    </span>
+                    <button class="delete-btn" onclick="deleteCollection('${collection.id}')">Xóa</button>
                 </div>
             `).join('');
         }
 
+        // Hiển thị từ vựng trong Collection qua Modal
+        function showCollectionWords(collectionId) {
+            const collection = collections.find(c => c.id === collectionId);
+            if (!collection) return;
+
+            const modal = document.getElementById('collectionModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalWordList = document.getElementById('modalWordList');
+
+            modalTitle.textContent = collection.name;
+            modalWordList.innerHTML = collection.words.length === 0 ?
+                '<p style="text-align: center; color: #666;">Chưa có từ vựng trong Collection này.</p>' :
+                collection.words.map((word, index) => `
+                    <div class="word-item">
+                        <span><strong>${word.vietnamese}</strong> → ${word.french}</span>
+                        <button class="delete-btn" onclick="deleteWord('${collectionId}', ${index}); closeModal();">Xóa</button>
+                    </div>
+                `).join('');
+
+            modal.style.display = 'flex';
+        }
+
+        // Đóng Modal
+        function closeModal() {
+            document.getElementById('collectionModal').style.display = 'none';
+            updateCollectionList(); // Cập nhật lại danh sách Collection khi đóng modal
+        }
+
+        // Cập nhật danh sách Collection trong select box
+        function updateCollectionSelects() {
+            const collectionSelect = document.getElementById('collectionSelect');
+            const gameCollectionSelect = document.getElementById('gameCollectionSelect');
+            const options = collections.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            collectionSelect.innerHTML = '<option value="">-- Chọn hoặc tạo mới --</option>' + options;
+            gameCollectionSelect.innerHTML = '<option value="">-- Tất cả từ vựng --</option>' + options;
+        }
+
         // Bắt đầu game
         function startGame() {
-            if (words.length === 0) {
+            const collectionId = document.getElementById('gameCollectionSelect').value;
+            const repeatCount = parseInt(document.getElementById('repeatCount').value) || 1;
+
+            let gameWords = collectionId ?
+                collections.find(c => c.id === collectionId)?.words || [] :
+                [...words];
+
+            if (gameWords.length === 0) {
                 showNotification('Vui lòng thêm từ vựng trước khi chơi!', 'error');
                 return;
             }
@@ -588,7 +772,13 @@ Tôi yêu bạn | Je t'aime"></textarea>
             isGameRunning = true;
             gamePhase = 'question';
             currentWordIndex = 0;
-            currentGameWords = [...words].sort(() => Math.random() - 0.5); // Shuffle
+            currentGameWords = [];
+
+            // Tạo danh sách từ với số lần lặp
+            for (let i = 0; i < repeatCount; i++) {
+                const shuffled = [...gameWords].sort(() => Math.random() - 0.5);
+                currentGameWords.push(...shuffled);
+            }
 
             document.getElementById('startBtn').disabled = true;
             document.getElementById('stopBtn').disabled = false;
@@ -604,14 +794,14 @@ Tôi yêu bạn | Je t'aime"></textarea>
         function stopGame() {
             isGameRunning = false;
             clearInterval(gameInterval);
-            
+
             document.getElementById('startBtn').disabled = false;
             document.getElementById('stopBtn').disabled = true;
             document.getElementById('answerDisplay').style.display = 'none';
-            
+
             document.getElementById('wordDisplay').textContent = 'Game đã dừng';
             document.getElementById('progressFill').style.width = '0%';
-            
+
             showNotification('Game đã dừng!', 'info');
         }
 
@@ -629,39 +819,32 @@ Tôi yêu bạn | Je t'aime"></textarea>
             const gameMode = document.getElementById('gameMode').value;
 
             if (gamePhase === 'question') {
-                // Ẩn đáp án
                 document.getElementById('answerDisplay').style.display = 'none';
 
-                // Hiển thị từ dựa trên chế độ chơi
                 let displayText = '';
                 if (gameMode === 'vietnamese-to-french') {
                     displayText = currentWord.vietnamese;
                 } else if (gameMode === 'french-to-vietnamese') {
                     displayText = currentWord.french;
-                } else { // mixed
+                } else {
                     displayText = Math.random() > 0.5 ? currentWord.vietnamese : currentWord.french;
                 }
 
                 document.getElementById('wordDisplay').textContent = displayText;
-                
-                // Cập nhật progress bar
+
                 const progress = ((currentWordIndex + 1) / currentGameWords.length) * 100;
                 document.getElementById('progressFill').style.width = progress + '%';
 
-                // Cập nhật thống kê
                 gameStats.totalWordsShown++;
                 gameStats.totalTime += displayTime;
                 saveStats();
                 updateStats();
 
-                // Chuyển sang phase hiển thị đáp án
                 gamePhase = 'answer';
                 gameInterval = setTimeout(() => {
                     showCurrentAnswer();
                 }, displayTime);
-
             } else if (gamePhase === 'answer') {
-                // Chuyển sang từ tiếp theo
                 currentWordIndex++;
                 gamePhase = 'question';
                 gameInterval = setTimeout(() => {
@@ -689,7 +872,7 @@ Tôi yêu bạn | Je t'aime"></textarea>
                     <div class="answer-french">${currentWord.vietnamese}</div>
                     <div class="answer-vietnamese">${currentWord.french}</div>
                 `;
-            } else { // mixed
+            } else {
                 if (currentDisplay === currentWord.vietnamese) {
                     answerHTML = `
                         <div class="answer-french">${currentWord.french}</div>
@@ -706,16 +889,35 @@ Tôi yêu bạn | Je t'aime"></textarea>
             document.getElementById('answerDisplay').innerHTML = answerHTML;
             document.getElementById('answerDisplay').style.display = 'block';
 
-            // Tiếp tục với phase answer
             showNextWord();
         }
 
-        // Lưu từ vựng vào localStorage
+        // Lưu Collections
+        function saveCollections() {
+            localStorage.setItem('frenchCollections', JSON.stringify(collections));
+        }
+
+        // Tải Collections
+        function loadCollections() {
+            const savedCollections = localStorage.getItem('frenchCollections');
+            if (savedCollections) {
+                collections = JSON.parse(savedCollections);
+                collections.forEach(c => {
+                    c.words.forEach(w => {
+                        if (!words.some(wd => wd.vietnamese === w.vietnamese && wd.french === w.french)) {
+                            words.push(w);
+                        }
+                    });
+                });
+            }
+        }
+
+        // Lưu từ vựng
         function saveWords() {
             localStorage.setItem('frenchWords', JSON.stringify(words));
         }
 
-        // Tải từ vựng từ localStorage
+        // Tải từ vựng
         function loadWords() {
             const savedWords = localStorage.getItem('frenchWords');
             if (savedWords) {
@@ -736,13 +938,14 @@ Tôi yêu bạn | Je t'aime"></textarea>
             }
         }
 
-        // Cập nhật hiển thị thống kê
+        // Cập nhật thống kê
         function updateStats() {
             document.getElementById('totalWords').textContent = words.length;
+            document.getElementById('totalCollections').textContent = collections.length;
             document.getElementById('totalSessions').textContent = gameStats.totalSessions;
             document.getElementById('totalWordsShown').textContent = gameStats.totalWordsShown;
-            
-            const avgTime = gameStats.totalWordsShown > 0 ? 
+
+            const avgTime = gameStats.totalWordsShown > 0 ?
                 (gameStats.totalTime / gameStats.totalWordsShown / 1000).toFixed(1) : 0;
             document.getElementById('averageTime').textContent = avgTime + 's';
         }
@@ -763,20 +966,20 @@ Tôi yêu bạn | Je t'aime"></textarea>
 
         // Lưu danh sách từ vựng ra file JSON
         function saveToFile() {
-            if (words.length === 0) {
-                showNotification('Không có từ vựng nào để lưu!', 'error');
+            if (collections.length === 0) {
+                showNotification('Không có Collection nào để lưu!', 'error');
                 return;
             }
 
-            const dataStr = JSON.stringify(words, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = 'french-vocabulary.json';
+            const dataStr = JSON.stringify(collections, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+
+            const exportFileDefaultName = 'french-collections.json';
             const linkElement = document.createElement('a');
             linkElement.setAttribute('href', dataUri);
             linkElement.setAttribute('download', exportFileDefaultName);
             linkElement.click();
-            
+
             showNotification('Đã lưu file thành công!', 'success');
         }
 
@@ -791,19 +994,26 @@ Tôi yêu bạn | Je t'aime"></textarea>
             const file = event.target.files[0];
             if (file && file.type === 'application/json') {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     try {
-                        const importedWords = JSON.parse(e.target.result);
-                        if (Array.isArray(importedWords)) {
-                            words = importedWords;
+                        const importedCollections = JSON.parse(e.target.result);
+                        if (Array.isArray(importedCollections)) {
+                            collections = importedCollections;
+                            words = [];
+                            collections.forEach(c => {
+                                c.words.forEach(w => {
+                                    if (!words.some(wd => wd.vietnamese === w.vietnamese && wd.french === w.french)) {
+                                        words.push(w);
+                                    }
+                                });
+                            });
+                            saveCollections();
                             saveWords();
-                            updateWordList();
+                            updateCollectionList();
+                            updateCollectionSelects();
                             updateStats();
-                            showNotification(`Đã tải ${words.length} từ vựng!`, 'success');
-                            // Chuyển sang tab Từ vựng để xem kết quả
-                            showTab('vocabulary');
-                            document.querySelector('.tab-btn[onclick="showTab(\'vocabulary\')"]').classList.add('active');
-                            document.querySelector('.tab-btn[onclick="showTab(\'setup\')"]').classList.remove('active');
+                            showNotification(`Đã tải ${collections.length} Collection!`, 'success');
+                            showTab('collection');
                         } else {
                             showNotification('File JSON không đúng định dạng!', 'error');
                         }
@@ -836,8 +1046,9 @@ Tôi yêu bạn | Je t'aime"></textarea>
             }, 3000);
         }
 
-        // Khởi tạo ứng dụng khi trang web được tải
+        // Khởi tạo ứng dụng
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
+
 </html>
