@@ -549,7 +549,8 @@
             transition: all 0.2s ease;
         }
 
-        .lang-btn.active, .lang-btn:hover {
+        .lang-btn.active,
+        .lang-btn:hover {
             background: #4299e1;
             color: white;
         }
@@ -566,7 +567,7 @@
             font-family: 'Consolas', monospace;
         }
 
-        .ai-prompt-container ol{
+        .ai-prompt-container ol {
             padding-left: 20px;
             margin-top: 10px;
             color: #4a5568;
@@ -576,7 +577,7 @@
             margin-bottom: 10px;
         }
 
-        .ai-prompt-container h3{
+        .ai-prompt-container h3 {
             font-size: 1.2em;
             margin: 20px 0;
         }
@@ -800,130 +801,148 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
 
             <button class="btn btn-danger" onclick="resetStats()">🔄 Đặt lại thống kê</button>
         </div>
-                <!-- Tab Hướng dẫn -->
-                <div id="guide" class="tab-content">
-                    <h3 class="guide-title">📖 Hướng dẫn sử dụng Reflex</h3>
-                    <div class="guide-content">
-                        <div class="guide-section">
-                            <h4>1. Giới thiệu</h4>
-                            <p>Reflex là ứng dụng web giúp bạn học từ vựng và luyện phản xạ giao tiếp tiếng Anh hoặc tiếng Pháp thông qua trò chơi. Với giao diện thân thiện và tính năng quản lý từ vựng theo Bộ sưu tập, bạn có thể dễ dàng tổ chức và học từ vựng hiệu quả.</p>
-                        </div>
-                        <div class="guide-section">
-                            <h4>2. Hướng dẫn sử dụng các tab</h4>
-                            <div class="guide-step">
-                                <div class="step-number">1</div>
-                                <div class="step-content">
-                                    <h5>Tab Thiết lập</h5>
-                                    <ul>
-                                        <li>Nhập từ vựng theo định dạng: <code>Tiếng Việt : Tiếng Anh/Tiếng Pháp</code> (mỗi dòng một từ hoặc câu).</li>
-                                        <li>Chọn hoặc tạo Bộ sưu tập mới để tổ chức từ vựng theo chủ đề (ví dụ: Giao tiếp, Du lịch).</li>
-                                        <li>Tải file JSON để nhập nhanh danh sách từ vựng.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="guide-step">
-                                <div class="step-number">2</div>
-                                <div class="step-content">
-                                    <h5>Tab Bộ sưu tập</h5>
-                                    <ul>
-                                        <li>Xem danh sách các Bộ sưu tập đã tạo.</li>
-                                        <li>Nhấp vào Bộ sưu tập để xem từ vựng trong Modal.</li>
-                                        <li>Chỉnh sửa hoặc xóa từ vựng bằng nút "Sửa" hoặc "Xóa".</li>
-                                        <li>Chọn nhiều từ bằng checkbox để xóa hàng loạt.</li>
-                                        <li>Lưu danh sách Bộ sưu tập ra file JSON.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="guide-step">
-                                <div class="step-number">3</div>
-                                <div class="step-content">
-                                    <h5>Tab Chơi game</h5>
-                                    <ul>
-                                        <li>Chọn Bộ sưu tập hoặc sử dụng tất cả từ vựng để chơi.</li>
-                                        <li>Điều chỉnh chế độ chơi, thời gian hiển thị, và số lần lặp.</li>
-                                        <li>Nhấn "Bắt đầu" để luyện phản xạ với từ vựng/câu ngẫu nhiên.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="guide-step">
-                                <div class="step-number">4</div>
-                                <div class="step-content">
-                                    <h5>Tab Thống kê</h5>
-                                    <ul>
-                                        <li>Xem tổng số từ vựng, Bộ sưu tập, lần chơi, và thời gian trung bình.</li>
-                                        <li>Đặt lại thống kê nếu cần.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="guide-section">
-                            <h4>3. Sử dụng AI để tạo mẫu câu giao tiếp</h4>
-                            <p>Sử dụng các mô hình AI như Grok, GPT, Claude, hoặc Deepseek để tạo các mẫu câu giao tiếp tiếng Anh hoặc tiếng Pháp phù hợp với trình độ của bạn.</p>
-                            <div class="ai-prompt-container">
-                                <div class="prompt-header">
-                                    <h5>Lệnh gợi ý (Prompt) cho AI</h5>
-                                    <div class="language-toggle">
-                                        <button class="lang-btn active" onclick="showPrompt('french')">Tiếng Pháp</button>
-                                        <button class="lang-btn" onclick="showPrompt('english')">Tiếng Anh</button>
-                                    </div>
-                                </div>
-                                <div class="prompt-content">
-                                    <p id="aiPromptFrench">
-                                        Please take on the role of a native French speaker and a French language teacher with 20 years of experience in teaching French communication. I am currently at the <code>A2/B1/B2</code> level, but I still struggle with practical communication: I often stutter, make mistakes when forming sentences, and hesitate when responding.
-
-                                        Every day, please provide me with 10 short, simple, and commonly used French phrases for daily life. The goal is to help me practice speaking French naturally, without translating from Vietnamese in my head.
-                                        
-                                        Please ensure the following:
-                                        
-                                        - The phrases are suitable for learners at the <code>A2/B1/B2</code> level.
-                                        - The sentences are practical and easy to apply in everyday situations.
-                                        - Each phrase should be followed by a clear Vietnamese translation.
-                                        - Present the sentences in the format: "Vietnamese meaning" : "French sentence".
-                                    </p>
-                                    <p id="aiPromptEnglish" style="display: none;">
-        Act as a native English speaker and a conversational English teacher with 20 years of experience. I am currently at the <code>A2/B1/B2</code> level, but I struggle with real-life communication: I stutter, form incorrect sentences, and hesitate when responding.
-        Each day, provide me with 10 short, simple, and common conversational sentences used in daily life. The goal is to help me practice natural English speaking without translating from Vietnamese in my head.
-        Please ensure:
-        - The sentences are suitable for learners at the <code>A2/B1/B2</code> level.
-        - The sentences are practical and easily applicable in everyday situations.
-        - Include clear translations in Vietnamese.
-        - Format the sentences as: "Vietnamese meaning" : "English sentence"
-                                    </p>
-                                    <button class="btn copy-btn" onclick="copyPrompt()">📋 Sao chép Prompt</button>
-                                </div>
-                                <h3>Ví dụ đầu ra từ AI (Tiếng Pháp):</h3>
-                                <ul>
-                                    <li>"Xin chào, bạn khỏe không?" : "Bonjour, tu vas bien ?"</li>
-                                    <li>"Tôi muốn một cà phê, làm ơn." : "Je voudrais un café, s'il vous plaît."</li>
-                                    <li>"Bây giờ là mấy giờ?" : "Quelle heure est-il ?"</li>
-                                </ul>
-                                <h3>Ví dụ đầu ra từ AI (Tiếng Anh):</h3>
-                                <ul>
-                                    <li>"Xin chào, bạn khỏe không?" : "Hello, how are you?"</li>
-                                    <li>"Tôi muốn một cà phê, làm ơn." : "I’d like a coffee, please."</li>
-                                    <li>"Bây giờ là mấy giờ?" : "What time is it?"</li>
-                                </ul>
-                                <h3>Cách sử dụng:</h3>
-                                <ol>
-                                    <li>Chọn ngôn ngữ (Tiếng Anh hoặc Tiếng Pháp) và sao chép lệnh gợi ý bằng nút "Sao chép Prompt".</li>
-                                    <li>Thay đổi trình độ (<code>A2/B1/B2</code>) trong lệnh gợi ý để phù hợp với bạn.</li>
-                                    <li>Gửi lệnh gợi ý cho AI (Grok, GPT, Claude, Deepseek, v.v.).</li>
-                                    <li>Lấy danh sách câu trả về và nhập vào tab "Thiết lập" theo định dạng <code>Tiếng Việt : Tiếng Anh/Tiếng Pháp</code>.</li>
-                                    <li>Sử dụng tab "Chơi game" để luyện phản xạ với các câu này.</li>
-                                </ol>
-                            </div>
-                        </div>
-                        <div class="guide-section">
-                            <h4>4. Mẹo học hiệu quả</h4>
+        <!-- Tab Hướng dẫn -->
+        <div id="guide" class="tab-content">
+            <h3 class="guide-title">📖 Hướng dẫn sử dụng Reflex</h3>
+            <div class="guide-content">
+                <div class="guide-section">
+                    <h4>1. Giới thiệu</h4>
+                    <p>Reflex là ứng dụng web giúp bạn học từ vựng và luyện phản xạ giao tiếp tiếng Anh hoặc tiếng Pháp
+                        thông qua trò chơi. Với giao diện thân thiện và tính năng quản lý từ vựng theo Bộ sưu tập, bạn
+                        có thể dễ dàng tổ chức và học từ vựng hiệu quả.</p>
+                </div>
+                <div class="guide-section">
+                    <h4>2. Hướng dẫn sử dụng các tab</h4>
+                    <div class="guide-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Tab Thiết lập</h5>
                             <ul>
-                                <li>Tạo Bộ sưu tập theo chủ đề riêng cho từng ngôn ngữ (ví dụ: "Tiếng Anh - Giao tiếp", "Tiếng Pháp - Du lịch").</li>
-                                <li>Luyện tập hàng ngày với chế độ "Trộn lẫn" để tăng phản xạ.</li>
-                                <li>Sử dụng AI để làm mới từ vựng và mẫu câu thường xuyên.</li>
-                                <li>Theo dõi tiến độ qua tab "Thống kê" để duy trì động lực.</li>
+                                <li>Nhập từ vựng theo định dạng: <code>Tiếng Việt : Tiếng Anh/Tiếng Pháp</code> (mỗi
+                                    dòng một từ hoặc câu).</li>
+                                <li>Chọn hoặc tạo Bộ sưu tập mới để tổ chức từ vựng theo chủ đề (ví dụ: Giao tiếp, Du
+                                    lịch).</li>
+                                <li>Tải file JSON để nhập nhanh danh sách từ vựng.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Tab Bộ sưu tập</h5>
+                            <ul>
+                                <li>Xem danh sách các Bộ sưu tập đã tạo.</li>
+                                <li>Nhấp vào Bộ sưu tập để xem từ vựng trong Modal.</li>
+                                <li>Chỉnh sửa hoặc xóa từ vựng bằng nút "Sửa" hoặc "Xóa".</li>
+                                <li>Chọn nhiều từ bằng checkbox để xóa hàng loạt.</li>
+                                <li>Lưu danh sách Bộ sưu tập ra file JSON.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Tab Chơi game</h5>
+                            <ul>
+                                <li>Chọn Bộ sưu tập hoặc sử dụng tất cả từ vựng để chơi.</li>
+                                <li>Điều chỉnh chế độ chơi, thời gian hiển thị, và số lần lặp.</li>
+                                <li>Nhấn "Bắt đầu" để luyện phản xạ với từ vựng/câu ngẫu nhiên.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="guide-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h5>Tab Thống kê</h5>
+                            <ul>
+                                <li>Xem tổng số từ vựng, Bộ sưu tập, lần chơi, và thời gian trung bình.</li>
+                                <li>Đặt lại thống kê nếu cần.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <div class="guide-section">
+                    <h4>3. Sử dụng AI để tạo mẫu câu giao tiếp</h4>
+                    <p>Sử dụng các mô hình AI như Grok, GPT, Claude, hoặc Deepseek để tạo các mẫu câu giao tiếp tiếng
+                        Anh hoặc tiếng Pháp phù hợp với trình độ của bạn.</p>
+                    <div class="ai-prompt-container">
+                        <div class="prompt-header">
+                            <h5>Lệnh gợi ý (Prompt) cho AI</h5>
+                            <div class="language-toggle">
+                                <button class="lang-btn active" onclick="showPrompt('french')">Tiếng Pháp</button>
+                                <button class="lang-btn" onclick="showPrompt('english')">Tiếng Anh</button>
+                            </div>
+                        </div>
+                        <div class="prompt-content">
+                            <p id="aiPromptFrench">
+                                Please take on the role of a native French speaker and a French language teacher with 20
+                                years of experience in teaching French communication. I am currently at the
+                                <code>A2/B1/B2</code> level, but I still struggle with practical communication: I often
+                                stutter, make mistakes when forming sentences, and hesitate when responding.
+
+                                Every day, please provide me with 10 short, simple, and commonly used French phrases for
+                                daily life. The goal is to help me practice speaking French naturally, without
+                                translating from Vietnamese in my head.
+
+                                Please ensure the following:
+
+                                - The phrases are suitable for learners at the <code>A2/B1/B2</code> level.
+                                - The sentences are practical and easy to apply in everyday situations.
+                                - Each phrase should be followed by a clear Vietnamese translation.
+                                - Present the sentences in the format: "Vietnamese meaning" : "French sentence".
+                            </p>
+                            <p id="aiPromptEnglish" style="display: none;">
+                                Act as a native English speaker and a conversational English teacher with 20 years of
+                                experience. I am currently at the <code>A2/B1/B2</code> level, but I struggle with
+                                real-life communication: I stutter, form incorrect sentences, and hesitate when
+                                responding.
+                                Each day, provide me with 10 short, simple, and common conversational sentences used in
+                                daily life. The goal is to help me practice natural English speaking without translating
+                                from Vietnamese in my head.
+                                Please ensure:
+                                - The sentences are suitable for learners at the <code>A2/B1/B2</code> level.
+                                - The sentences are practical and easily applicable in everyday situations.
+                                - Include clear translations in Vietnamese.
+                                - Format the sentences as: "Vietnamese meaning" : "English sentence"
+                            </p>
+                            <button class="btn copy-btn" onclick="copyPrompt()">📋 Sao chép Prompt</button>
+                        </div>
+                        <h3>Ví dụ đầu ra từ AI (Tiếng Pháp):</h3>
+                        <ul>
+                            <li>"Xin chào, bạn khỏe không?" : "Bonjour, tu vas bien ?"</li>
+                            <li>"Tôi muốn một cà phê, làm ơn." : "Je voudrais un café, s'il vous plaît."</li>
+                            <li>"Bây giờ là mấy giờ?" : "Quelle heure est-il ?"</li>
+                        </ul>
+                        <h3>Ví dụ đầu ra từ AI (Tiếng Anh):</h3>
+                        <ul>
+                            <li>"Xin chào, bạn khỏe không?" : "Hello, how are you?"</li>
+                            <li>"Tôi muốn một cà phê, làm ơn." : "I’d like a coffee, please."</li>
+                            <li>"Bây giờ là mấy giờ?" : "What time is it?"</li>
+                        </ul>
+                        <h3>Cách sử dụng:</h3>
+                        <ol>
+                            <li>Chọn ngôn ngữ (Tiếng Anh hoặc Tiếng Pháp) và sao chép lệnh gợi ý bằng nút "Sao chép
+                                Prompt".</li>
+                            <li>Thay đổi trình độ (<code>A2/B1/B2</code>) trong lệnh gợi ý để phù hợp với bạn.</li>
+                            <li>Gửi lệnh gợi ý cho AI (Grok, GPT, Claude, Deepseek, v.v.).</li>
+                            <li>Lấy danh sách câu trả về và nhập vào tab "Thiết lập" theo định dạng
+                                <code>Tiếng Việt : Tiếng Anh/Tiếng Pháp</code>.</li>
+                            <li>Sử dụng tab "Chơi game" để luyện phản xạ với các câu này.</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="guide-section">
+                    <h4>4. Mẹo học hiệu quả</h4>
+                    <ul>
+                        <li>Tạo Bộ sưu tập theo chủ đề riêng cho từng ngôn ngữ (ví dụ: "Tiếng Anh - Giao tiếp", "Tiếng
+                            Pháp - Du lịch").</li>
+                        <li>Luyện tập hàng ngày với chế độ "Trộn lẫn" để tăng phản xạ.</li>
+                        <li>Sử dụng AI để làm mới từ vựng và mẫu câu thường xuyên.</li>
+                        <li>Theo dõi tiến độ qua tab "Thống kê" để duy trì động lực.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div id="collectionModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -1304,7 +1323,8 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
         }
 
         // Hiển thị từ tiếp theo
-        function showNextWord() {
+                // Hiển thị từ tiếp theo
+                function showNextWord() {
             if (!isGameRunning || currentWordIndex >= currentGameWords.length) {
                 stopGame();
                 showNotification('Đã hoàn thành tất cả từ vựng!', 'success');
@@ -1320,11 +1340,11 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 document.getElementById('answerDisplay').style.display = 'none';
 
                 let displayText = '';
-                if (gameMode === 'vietnamese-to-french') {
+                if (gameMode === 'vietnamese-to-target') {
                     displayText = currentWord.vietnamese;
-                } else if (gameMode === 'french-to-vietnamese') {
-                    displayText = currentWord.french;
-                } else {
+                } else if (gameMode === 'target-to-vietnamese') {
+                    displayText = currentWord.french; // Assuming French as target, adjust if English is preferred
+                } else { // mixed mode
                     displayText = Math.random() > 0.5 ? currentWord.vietnamese : currentWord.french;
                 }
 
@@ -1350,27 +1370,28 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 }, answerDisplayTime);
             }
         }
-
-               // Hiển thị đáp án của từ hiện tại
-               function showCurrentAnswer() {
+        
+        // Hiển thị đáp án của từ hiện tại
+                // Hiển thị đáp án của từ hiện tại
+                function showCurrentAnswer() {
             if (!isGameRunning || currentWordIndex >= currentGameWords.length) return;
 
             const currentWord = currentGameWords[currentWordIndex];
             const gameMode = document.getElementById('gameMode').value;
             const currentDisplay = document.getElementById('wordDisplay').textContent;
-
             let answerHTML = '';
+
             if (gameMode === 'vietnamese-to-target') {
+                answerHTML = `
+                    <div class="answer-vietnamese">${currentWord.vietnamese}</div>
+                    <div class="answer-french">${currentWord.french}</div>
+                `;
+            } else if (gameMode === 'target-to-vietnamese') {
                 answerHTML = `
                     <div class="answer-french">${currentWord.french}</div>
                     <div class="answer-vietnamese">${currentWord.vietnamese}</div>
                 `;
-            } else if (gameMode === 'target-to-vietnamese') {
-                answerHTML = `
-                    <div class="answer-french">${currentWord.vietnamese}</div>
-                    <div class="answer-vietnamese">${currentWord.french}</div>
-                `;
-            } else {
+            } else { // mixed mode
                 if (currentDisplay === currentWord.vietnamese) {
                     answerHTML = `
                         <div class="answer-french">${currentWord.french}</div>
@@ -1378,8 +1399,8 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                     `;
                 } else {
                     answerHTML = `
-                        <div class="answer-french">${currentWord.vietnamese}</div>
-                        <div class="answer-vietnamese">${currentWord.french}</div>
+                        <div class="answer-vietnamese">${currentWord.vietnamese}</div>
+                        <div class="answer-french">${currentWord.french}</div>
                     `;
                 }
             }
@@ -1544,8 +1565,8 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             }, 3000);
         }
 
-                // Hiển thị prompt theo ngôn ngữ
-                function showPrompt(language) {
+        // Hiển thị prompt theo ngôn ngữ
+        function showPrompt(language) {
             const frenchPrompt = document.getElementById('aiPromptFrench');
             const englishPrompt = document.getElementById('aiPromptEnglish');
             const frenchBtn = document.querySelector('.lang-btn[onclick="showPrompt(\'french\')"]');
@@ -1569,7 +1590,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             const frenchPrompt = document.getElementById('aiPromptFrench');
             const englishPrompt = document.getElementById('aiPromptEnglish');
             const activePrompt = frenchPrompt.style.display === 'block' ? frenchPrompt : englishPrompt;
-            
+
             navigator.clipboard.writeText(activePrompt.textContent.trim())
                 .then(() => showNotification('Đã sao chép prompt!', 'success'))
                 .catch(() => showNotification('Lỗi khi sao chép prompt!', 'error'));
