@@ -38,7 +38,6 @@
             min-height: 96vh;
             width: 90%;
             text-align: center;
-            margin-top: 32px;
         }
 
         h1 {
@@ -1073,6 +1072,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 updateCollectionList();
                 updateCollectionSelects();
                 updateStats();
+                document.getElementById('fileInput').value = ''; // Reset file input
                 showNotification('Đã xóa tất cả Bộ sưu tập!', 'info');
             }
         }
@@ -1518,10 +1518,14 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                     try {
                         const importedCollections = JSON.parse(e.target.result);
                         if (Array.isArray(importedCollections)) {
-                            collections = importedCollections;
-                            words = [];
-                            collections.forEach(c => {
-                                c.words.forEach(w => {
+                            importedCollections.forEach(importedCollection => {
+                                let collection = collections.find(c => c.id === importedCollection.id);
+                                if (!collection) {
+                                    collection = { id: importedCollection.id, name: importedCollection.name, words: [] };
+                                    collections.push(collection);
+                                }
+                                collection.words = [...importedCollection.words]; // Replace words in existing collection
+                                importedCollection.words.forEach(w => {
                                     if (!words.some(wd => wd.vietnamese === w.vietnamese && wd.french === w.french)) {
                                         words.push(w);
                                     }
@@ -1532,7 +1536,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                             updateCollectionList();
                             updateCollectionSelects();
                             updateStats();
-                            showNotification(`Đã tải ${collections.length} Bộ sưu tập!`, 'success');
+                            showNotification(`Đã tải ${importedCollections.length} Bộ sưu tập!`, 'success');
                             showTab('collection');
                         } else {
                             showNotification('File JSON không đúng định dạng!', 'error');
@@ -1542,6 +1546,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                     }
                 };
                 reader.readAsText(file);
+                document.getElementById('fileInput').value = ''; // Reset file input
             } else {
                 showNotification('Vui lòng chọn file JSON!', 'error');
             }
