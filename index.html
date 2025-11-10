@@ -53,6 +53,16 @@
             margin-bottom: 20px;
             gap: 20px;
         }
+        
+        .form-group-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .form-group-wrapper .form-group {
+            flex: 1;
+        }
 
         .create-collection .form-group {
             flex: 1;
@@ -692,13 +702,26 @@ Xin lỗi : Sorry hoặc Excusez-moi
 Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             </div>
 
-            <div class="form-group">
-                <label>Hoặc tải file JSON:</label>
-                <div class="file-input-wrapper">
-                    <input type="file" id="fileInput" accept=".json">
-                    <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
+           <div class="form-group-wrapper">
+                <div class="form-group">
+                    <label>Hoặc tải file JSON:</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileInput" accept=".json">
+                        <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
+                    </div>
                 </div>
-            </div>
+    
+                <div class="form-group">
+                    <label>Hoặc tải file TXT (bắt buộc chọn Collection):</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="txtFileInput" accept=".txt">
+                        <span>📁 Chọn file TXT hoặc kéo thả vào đây</span>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 5px;">
+                        Định dạng: <code>Tiếng Việt : Tiếng Anh/Pháp</code> (mỗi dòng 1 cặp)
+                    </p>
+                </div>
+           </div>
 
             <button class="btn" onclick="addWords()">Thêm từ vựng</button>
         </div>
@@ -978,6 +1001,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             updateCollectionSelects();
             updateStats();
             setupFileInput();
+            setupTxtFileInput();
         }
 
         // Chuyển đổi tab
@@ -1508,6 +1532,98 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             const fileInput = document.getElementById('fileInput');
             fileInput.addEventListener('change', handleFileSelect);
         }
+
+        // Thiết lập file input TXT
+function setupTxtFileInput() {
+    const txtFileInput = document.getElementById('txtFileInput');
+    txtFileInput.addEventListener('change', handleTxtFileSelect);
+}
+
+// Xử lý file TXT
+function handleTxtFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file || file.type !== 'text/plain') {
+        showNotification('Vui lòng chọn file .txt hợp lệ!', 'error');
+        return;
+    }
+
+    const collectionSelect = document.getElementById('collectionSelect').value;
+    const newCollectionName = document.getElementById('newCollectionName').value.trim();
+
+    let collectionId = collectionSelect;
+
+    // BẮT BUỘC: phải chọn hoặc tạo mới collection
+    if (!collectionSelect && !newCollectionName) {
+        showNotification('Vui lòng chọn hoặc tạo mới Bộ sưu tập trước khi import TXT!', 'error');
+        document.getElementById('txtFileInput').value = '';
+        return;
+    }
+
+    if (newCollectionName && !collectionSelect) {
+        collectionId = Date.now().toString();
+        collections.push({
+            id: collectionId,
+            name: newCollectionName,
+            words: []
+        });
+        showNotification(`Đã tạo Bộ sưu tập mới: ${newCollectionName}`, 'success');
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        let addedCount = 0;
+
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed) return;
+
+            const parts = trimmed.split(':');
+            if (parts.length !== 2) {
+                console.warn(`Dòng không hợp lệ (bỏ qua): ${trimmed}`);
+                return;
+            }
+
+            const vietnamese = parts[0].trim();
+            const french = parts[1].trim();
+
+            if (!vietnamese || !french) return;
+
+            const word = { vietnamese, french };
+            const collection = collections.find(c => c.id === collectionId);
+            if (collection) {
+                if (!collection.words.some(w => w.vietnamese === vietnamese && w.french === french)) {
+                    collection.words.push(word);
+                    addedCount++;
+                }
+            }
+
+            // Cập nhật danh sách tổng (tránh trùng)
+            if (!words.some(w => w.vietnamese === vietnamese && w.french === french)) {
+                words.push(word);
+            }
+        });
+
+        if (addedCount > 0) {
+            saveCollections();
+            saveWords();
+            updateCollectionList();
+            updateCollectionSelects();
+            updateStats();
+            showNotification(`Đã thêm ${addedCount} từ vựng từ file TXT!`, 'success');
+            showTab('collection');
+        } else {
+            showNotification('Không có từ vựng hợp lệ nào trong file TXT!', 'warning');
+        }
+
+        // Reset input
+        document.getElementById('txtFileInput').value = '';
+        document.getElementById('newCollectionName').value = '';
+    };
+
+    reader.readAsText(file, 'UTF-8');
+}
 
         // Xử lý file được chọn
         function handleFileSelect(event) {
