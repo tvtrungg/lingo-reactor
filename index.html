@@ -5,669 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reflex - Luyện Phản Xạ Tiếng Anh & Tiếng Pháp</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link rel="stylesheet" href="styles.css">
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #333;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #6d6d6d;
-            text-align: center;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 1080px;
-            min-height: 96vh;
-            width: 90%;
-            text-align: center;
-        }
-
-        h1 {
-            color: #4a5568;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .create-collection {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 20px;
-        }
-        
-        .form-group-wrapper {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .form-group-wrapper .form-group {
-            flex: 1;
-        }
-
-        .create-collection .form-group {
-            flex: 1;
-        }
-
-        .tab-buttons {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0;
-            background: #f7fafc;
-            border-radius: 15px;
-            padding: 5px;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            margin: 0 5px;
-        }
-
-        .tab-btn.active {
-            background: #4299e1;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #4a5568;
-        }
-
-        input,
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #4299e1;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 148px;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #4299e1, #667eea);
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            font-weight: bold;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(66, 153, 225, 0.3);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #e53e3e, #fc8181);
-        }
-
-        .btn-success {
-            background: linear-gradient(45deg, #38a169, #68d391);
-        }
-
-        .game-area {
-            background: #f7fafc;
-            border-radius: 15px;
-            padding: 40px;
-            margin: 20px 0;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .word-display {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #e2e8f0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4299e1, #667eea);
-            transition: width 0.3s ease;
-        }
-
-        .game-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .stats-card {
-            background: #a0ccf0;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .stats-number {
-            font-size: 2.2em;
-            font-weight: 600;
-            color: #515b60;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .stats-label {
-            color: #6b7280;
-            font-weight: 500;
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stats-icon {
-            font-size: 2rem;
-            color: #7c3aed;
-        }
-
-        .collection-list,
-        .word-list {
-            background: #f7fafc;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            text-align: left;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .collection-item,
-        .word-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
-            transition: background-color 0.3s ease;
-        }
-
-        .word-item .word-checkbox {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .word-item .word-text {
-            flex: 1;
-        }
-
-        .collection-item:hover,
-        .word-item:hover {
-            background: #edf2f7;
-        }
-
-        .collection-item:last-child,
-        .word-item:last-child {
-            border-bottom: none;
-        }
-
-        .delete-btn {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .answer-display {
-            background: #e6fffa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border-left: 5px solid #4fd1c7;
-        }
-
-        .answer-french {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
-
-        .answer-vietnamese {
-            font-size: 1.2em;
-            color: #4a5568;
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            background: #f7fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .file-input-wrapper:hover {
-            border-color: #4299e1;
-            background: #ebf8ff;
-        }
-
-        .file-input-wrapper input[type="file"] {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.success {
-            background: #38a169;
-        }
-
-        .notification.error {
-            background: #e53e3e;
-        }
-
-        .notification.info {
-            background: #4299e1;
-        }
-
-        .edit-btn {
-            background: #4299e1;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            margin-right: 5px;
-            cursor: pointer;
-        }
-
-        .edit-form {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .edit-form input {
-            flex: 1;
-            padding: 8px;
-            border: 2px solid #e2e8f0;
-            border-radius: 5px;
-        }
-
-        .edit-form .btn {
-            padding: 8px 15px;
-            font-size: 12px;
-        }
-
-        .guide-title {
-            color: #2d3748;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .guide-content {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            text-align: left;
-        }
-
-        .guide-section {
-            margin-bottom: 30px;
-        }
-
-        .guide-section h4 {
-            color: #2d3748;
-            font-size: 1.4em;
-            margin-bottom: 15px;
-            border-left: 4px solid #4299e1;
-            padding-left: 10px;
-            font-weight: 600;
-        }
-
-        .guide-section p {
-            color: #4a5568;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            font-size: 1em;
-        }
-
-        .guide-section ul {
-            list-style-type: none;
-            margin-left: 0;
-            color: #4a5568;
-        }
-
-        .guide-section ul li {
-            margin-bottom: 10px;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .guide-section ul li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #38a169;
-            font-weight: bold;
-        }
-
-        .guide-section code {
-            background: #f1f5f9;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-family: 'Consolas', monospace;
-            color: #d53f8c;
-        }
-
-        .guide-step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            gap: 15px;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background: #4299e1;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-            flex-shrink: 0;
-        }
-
-        .step-content h5 {
-            color: #2d3748;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .ai-prompt-container {
-            background: #f7fafc;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 1px solid #e2e8f0;
-        }
-
-        .prompt-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .prompt-header h5 {
-            color: #2d3748;
-            font-size: 1.2em;
-            margin: 0;
-        }
-
-        .language-toggle {
-            display: flex;
-            gap: 10px;
-        }
-
-        .lang-btn {
-            background: #e2e8f0;
-            color: #4a5568;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.2s ease;
-        }
-
-        .lang-btn.active,
-        .lang-btn:hover {
-            background: #4299e1;
-            color: white;
-        }
-
-        .prompt-content p {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-size: 0.95em;
-            border: 1px solid #e5e7eb;
-            margin-bottom: 15px;
-            line-height: 1.6;
-            font-family: 'Consolas', monospace;
-        }
-
-        .ai-prompt-container ol {
-            padding-left: 20px;
-            margin-top: 10px;
-            color: #4a5568;
-        }
-
-        .ai-prompt-container ol li {
-            margin-bottom: 10px;
-        }
-
-        .ai-prompt-container h3 {
-            font-size: 1.2em;
-            margin: 20px 0;
-        }
-
-        .copy-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            font-size: 0.9em;
-        }
-
-        .word-checkbox {
-            margin-right: 10px;
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            max-width: 1000px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-close {
-            float: right;
-            font-size: 24px;
-            cursor: pointer;
-            color: #4a5568;
-        }
-
-        .modal-close:hover {
-            color: #e53e3e;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-                width: 95%;
-            }
-
-            .word-display {
-                font-size: 1.5em;
-            }
-
-            .tab-buttons {
-                flex-wrap: wrap;
-            }
-
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .create-collection {
-                flex-direction: column;
-                align-items: stretch;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Language Reflex</h1>
+        <h1>Phản xạ ngôn ngữ</h1>
         <i class="logo">(tvtrung)</i>
 
         <div class="tab-buttons">
@@ -702,17 +46,9 @@ Xin lỗi : Sorry hoặc Excusez-moi
 Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             </div>
 
-           <div class="form-group-wrapper">
+            <div class="form-group-wrapper">
                 <div class="form-group">
-                    <label>Hoặc tải file JSON:</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="fileInput" accept=".json">
-                        <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
-                    </div>
-                </div>
-    
-                <div class="form-group">
-                    <label>Hoặc tải file TXT (bắt buộc chọn Collection):</label>
+                    <label>Hoặc tải file TXT (bắt buộc chọn Bộ sưu tập):</label>
                     <div class="file-input-wrapper">
                         <input type="file" id="txtFileInput" accept=".txt">
                         <span>📁 Chọn file TXT hoặc kéo thả vào đây</span>
@@ -721,7 +57,14 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                         Định dạng: <code>Tiếng Việt : Tiếng Anh/Pháp</code> (mỗi dòng 1 cặp)
                     </p>
                 </div>
-           </div>
+                <div class="form-group">
+                    <label>Hoặc tải file JSON:</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="fileInput" accept=".json">
+                        <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
+                    </div>
+                </div>
+            </div>
 
             <button class="btn" onclick="addWords()">Thêm từ vựng</button>
         </div>
@@ -729,20 +72,31 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
         <!-- Tab Bộ sưu tập -->
         <div id="collection" class="tab-content">
             <div class="form-group">
-                <h3 style="margin-bottom: 20px; color: #4a5568;">📚 Danh sách Bộ sưu tập</h3>
-                <button class="btn btn-success" onclick="saveToFile()">💾 Lưu danh sách</button>
-                <button class="btn btn-danger" onclick="clearCollections()">🗑️ Xóa tất cả</button>
-            </div>
+                <h3 style="margin-bottom: 20px; color: #4a5568;">Danh sách Bộ sưu tập</h3>
 
+                <!-- THÊM BỘ LỌC -->
+                <div class="filter-buttons"
+                    style="margin-bottom: 15px; display: flex; gap: 10px; justify-content: space-between;">
+                    <div>
+                        <button class="btn btn-success" onclick="saveToFile()">💾 Lưu danh sách</button>
+                        <button class="btn btn-danger" onclick="clearCollections()">🗑️ Xóa tất cả</button>
+                    </div>
+                    <div>
+                        <button class="btn filter-btn active" data-lang="all" onclick="filterCollections('all')">
+                            Tất cả
+                        </button>
+                        <button class="btn filter-btn" data-lang="en-US" onclick="filterCollections('en-US')">
+                            Tiếng Anh
+                        </button>
+                        <button class="btn filter-btn" data-lang="fr-FR" onclick="filterCollections('fr-FR')">
+                            Tiếng Pháp
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
             <div id="collectionList" class="collection-list"></div>
-
-            <div
-                style="margin-top: 20px; padding: 20px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #0ea5e9;">
-                <p style="margin: 0; color: #0369a1;">
-                    💡 <strong>Hướng dẫn:</strong> Nhấp vào một Bộ sưu tập để xem từ vựng. Để thêm từ vựng, hãy chuyển
-                    sang tab "Thiết lập" và nhập từ vựng theo định dạng: <strong>Tiếng Việt : Tiếng Anh/Pháp</strong>
-                </p>
-            </div>
         </div>
 
         <!-- Tab Chơi game -->
@@ -824,6 +178,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
 
             <button class="btn btn-danger" onclick="resetStats()">🔄 Đặt lại thống kê</button>
         </div>
+
         <!-- Tab Hướng dẫn -->
         <div id="guide" class="tab-content">
             <h3 class="guide-title">📖 Hướng dẫn sử dụng Reflex</h3>
@@ -835,7 +190,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                         có thể dễ dàng tổ chức và học từ vựng hiệu quả.</p>
                 </div>
                 <div class="guide-section">
-                    <h4>2. Hướng dẫn sử dụng các tab</h4>
+                    <h4>2. Giới thiệu về các tabs</h4>
                     <div class="guide-step">
                         <div class="step-number">1</div>
                         <div class="step-content">
@@ -886,72 +241,40 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 </div>
                 <div class="guide-section">
                     <h4>3. Sử dụng AI để tạo mẫu câu giao tiếp</h4>
-                    <p>Sử dụng các mô hình AI như Grok, GPT, Claude, hoặc Deepseek để tạo các mẫu câu giao tiếp tiếng
-                        Anh hoặc tiếng Pháp phù hợp với trình độ của bạn.</p>
+                    <p>Sử dụng các mô hình AI như ChatGPT, Grok,...để tạo các mẫu câu giao tiếp tiếng
+                        Anh/tiếng Pháp với chủ đề yêu thích của bạn.</p>
                     <div class="ai-prompt-container">
                         <div class="prompt-header">
-                            <h5>Lệnh gợi ý (Prompt) cho AI</h5>
+                            <h5>Tạo Prompt cho AI</h5>
                             <div class="language-toggle">
-                                <button class="lang-btn active" onclick="showPrompt('french')">Tiếng Pháp</button>
-                                <button class="lang-btn" onclick="showPrompt('english')">Tiếng Anh</button>
+                                <button class="lang-btn active" onclick="setLanguage('english')">Tiếng Anh</button>
+                                <button class="lang-btn" onclick="setLanguage('french')">Tiếng Pháp</button>
                             </div>
                         </div>
-                        <div class="prompt-content">
-                            <p id="aiPromptFrench">
-                                Please take on the role of a native French speaker and a French language teacher with 20
-                                years of experience in teaching French communication. I am currently at the
-                                <code>A2/B1/B2</code> level, but I still struggle with practical communication: I often
-                                stutter, make mistakes when forming sentences, and hesitate when responding.
 
-                                Every day, please provide me with 10 short, simple, and commonly used French phrases for
-                                daily life. The goal is to help me practice speaking French naturally, without
-                                translating from Vietnamese in my head.
-
-                                Please ensure the following:
-
-                                - The phrases are suitable for learners at the <code>A2/B1/B2</code> level.
-                                - The sentences are practical and easy to apply in everyday situations.
-                                - Each phrase should be followed by a clear Vietnamese translation.
-                                - Present the sentences in the format: "Vietnamese meaning" : "French sentence".
-                            </p>
-                            <p id="aiPromptEnglish" style="display: none;">
-                                Act as a native English speaker and a conversational English teacher with 20 years of
-                                experience. I am currently at the <code>A2/B1/B2</code> level, but I struggle with
-                                real-life communication: I stutter, form incorrect sentences, and hesitate when
-                                responding.
-                                Each day, provide me with 10 short, simple, and common conversational sentences used in
-                                daily life. The goal is to help me practice natural English speaking without translating
-                                from Vietnamese in my head.
-                                Please ensure:
-                                - The sentences are suitable for learners at the <code>A2/B1/B2</code> level.
-                                - The sentences are practical and easily applicable in everyday situations.
-                                - Include clear translations in Vietnamese.
-                                - Format the sentences as: "Vietnamese meaning" : "English sentence"
-                            </p>
-                            <button class="btn copy-btn" onclick="copyPrompt()">📋 Sao chép Prompt</button>
+                        <!-- Input chủ đề -->
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="themeInput">Chủ đề học hôm nay:</label>
+                            <input type="text" id="themeInput"
+                                placeholder="Ví dụ: Đặt món ăn, Đi chợ, Gặp bạn, Du lịch..."
+                                style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #e2e8f0;">
                         </div>
-                        <h3>Ví dụ đầu ra từ AI (Tiếng Pháp):</h3>
-                        <ul>
-                            <li>"Xin chào, bạn khỏe không?" : "Bonjour, tu vas bien ?"</li>
-                            <li>"Tôi muốn một cà phê, làm ơn." : "Je voudrais un café, s'il vous plaît."</li>
-                            <li>"Bây giờ là mấy giờ?" : "Quelle heure est-il ?"</li>
-                        </ul>
-                        <h3>Ví dụ đầu ra từ AI (Tiếng Anh):</h3>
-                        <ul>
-                            <li>"Xin chào, bạn khỏe không?" : "Hello, how are you?"</li>
-                            <li>"Tôi muốn một cà phê, làm ơn." : "I’d like a coffee, please."</li>
-                            <li>"Bây giờ là mấy giờ?" : "What time is it?"</li>
-                        </ul>
-                        <h3>Cách sử dụng:</h3>
-                        <ol>
-                            <li>Chọn ngôn ngữ (Tiếng Anh hoặc Tiếng Pháp) và sao chép lệnh gợi ý bằng nút "Sao chép
-                                Prompt".</li>
-                            <li>Thay đổi trình độ (<code>A2/B1/B2</code>) trong lệnh gợi ý để phù hợp với bạn.</li>
-                            <li>Gửi lệnh gợi ý cho AI (Grok, GPT, Claude, Deepseek, v.v.).</li>
-                            <li>Lấy danh sách câu trả về và nhập vào tab "Thiết lập" theo định dạng
-                                <code>Tiếng Việt : Tiếng Anh/Tiếng Pháp</code>.</li>
-                            <li>Sử dụng tab "Chơi game" để luyện phản xạ với các câu này.</li>
-                        </ol>
+
+                        <!-- Nút tạo prompt -->
+                        <button class="btn" onclick="generatePrompt()" style="margin-bottom: 15px;">
+                            Tạo Prompt
+                        </button>
+
+                        <!-- Prompt kết quả -->
+                        <div id="generatedPrompt"
+                            style="display: none; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6; margin-top: 10px;">
+                            <p id="promptText"
+                                style="white-space: pre-wrap; font-family: Consolas, monospace; margin: 0; line-height: 1.6;">
+                            </p>
+                            <button class="btn copy-btn" onclick="copyGeneratedPrompt()" style="margin-top: 10px;">
+                                Sao chép Prompt
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="guide-section">
@@ -966,6 +289,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 </div>
             </div>
         </div>
+
         <div id="collectionModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="modal-close" onclick="closeModal()">&times;</span>
@@ -984,6 +308,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
         let words = [];
         let currentGameWords = [];
         let currentWordIndex = 0;
+        let currentFilter = 'all';
         let isGameRunning = false;
         let gameInterval;
         let gamePhase = 'question'; // 'question' or 'answer'
@@ -993,15 +318,75 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             totalTime: 0
         };
 
+        let currentAIPromptLang = 'english';
+
         // Khởi tạo ứng dụng
         function init() {
             loadCollections();
             loadStats();
+
+            // Khôi phục filter
+            const savedFilter = localStorage.getItem('collectionFilter') || 'all';
+            currentFilter = savedFilter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === savedFilter) {
+                    btn.classList.add('active');
+                }
+            });
+
             updateCollectionList();
             updateCollectionSelects();
             updateStats();
             setupFileInput();
             setupTxtFileInput();
+        }
+
+        // Chọn ngôn ngữ
+        function setLanguage(lang) {
+            currentAIPromptLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[onclick="setLanguage('${lang}')"]`).classList.add('active');
+        }
+
+        // Tạo prompt
+        function generatePrompt() {
+            const theme = document.getElementById('themeInput').value.trim();
+            if (!theme) {
+                showNotification('Vui lòng nhập chủ đề học!', 'error');
+                return;
+            }
+
+            const isEnglish = currentAIPromptLang === 'english';
+            const language = isEnglish ? 'English' : 'French';
+
+            const promptTemplate = `You are a native ${language} speaker and daily conversation coach with 20+ years helping learners speak naturally — without thinking in Vietnamese.
+Daily Task:
+Generate 15 short, ultra-common ${language} phrases for real-life situations under the theme: ${theme}.
+These must be phrases natives say every day — the kind you hear in cafés, shops, offices, or on the street.
+Strict Rules:
+1. Grammar: Simple, natural, spoken style (no textbook stiffness)
+2. No rare words, no idioms, no complex tenses
+3. Format exactly: Vietnamese meaning: ${language} phrase
+4. DO NOT number, explain, transliterate, or add anything else
+Today’s language: ${language}
+Today’s theme: ${theme}`;
+
+            document.getElementById('promptText').textContent = promptTemplate;
+            document.getElementById('generatedPrompt').style.display = 'block';
+            showNotification('Đã tạo prompt! Nhấn "Sao chép" để dùng.', 'success');
+        }
+
+        // Sao chép prompt đã tạo
+        function copyGeneratedPrompt() {
+            const text = document.getElementById('promptText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Đã sao chép prompt!', 'success');
+            }).catch(() => {
+                showNotification('Lỗi khi sao chép!', 'error');
+            });
         }
 
         // Chuyển đổi tab
@@ -1012,13 +397,24 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-
             document.getElementById(tabName).classList.add('active');
             document.querySelector(`.tab-btn[onclick="showTab('${tabName}')"]`).classList.add('active');
 
             if (tabName === 'collection') {
-                updateCollectionList();
+                updateCollectionList(); // Refresh với filter hiện tại
             }
+        }
+
+        function filterCollections(lang) {
+            currentFilter = lang;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            updateCollectionList();
+            localStorage.setItem('collectionFilter', lang); // Lưu trạng thái
         }
 
         // Thêm từ vựng
@@ -1033,14 +429,18 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             }
 
             let collectionId = collectionSelect;
+            let detectedLanguage = 'fr-FR'; // Mặc định
+
             if (newCollectionName && !collectionSelect) {
+                // Tự động detect từ input
+                detectedLanguage = detectLanguage(input);
                 collectionId = Date.now().toString();
                 collections.push({
                     id: collectionId,
                     name: newCollectionName,
-                    words: []
+                    words: [],
+                    language: detectedLanguage
                 });
-                showNotification(`Đã tạo Bộ sưu tập mới: ${newCollectionName}`, 'success');
             } else if (!collectionSelect) {
                 showNotification('Vui lòng chọn hoặc tạo mới một Bộ sưu tập!', 'error');
                 return;
@@ -1048,23 +448,21 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
 
             const lines = input.split('\n');
             let addedCount = 0;
-
             lines.forEach(line => {
                 const parts = line.split(':');
                 if (parts.length === 2) {
                     const vietnamese = parts[0].trim();
-                    const french = parts[1].trim();
-
-                    if (vietnamese && french) {
-                        const word = { vietnamese, french };
+                    const target = parts[1].trim();
+                    if (vietnamese && target) {
+                        const word = { vietnamese, french: target };
                         const collection = collections.find(c => c.id === collectionId);
                         if (collection) {
-                            if (!collection.words.some(w => w.vietnamese === vietnamese && w.french === french)) {
+                            if (!collection.words.some(w => w.vietnamese === vietnamese && w.french === target)) {
                                 collection.words.push(word);
                                 addedCount++;
                             }
                         }
-                        if (!words.some(w => w.vietnamese === vietnamese && w.french === french)) {
+                        if (!words.some(w => w.vietnamese === vietnamese && w.french === target)) {
                             words.push(word);
                         }
                     }
@@ -1079,10 +477,10 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 updateCollectionList();
                 updateCollectionSelects();
                 updateStats();
-                showNotification(`Đã thêm ${addedCount} từ vựng vào Bộ sưu tập!`, 'success');
+                showNotification(`Đã thêm ${addedCount} từ vựng vào Bộ sưu tập ${newCollectionName}!`, 'success');
                 showTab('collection');
             } else {
-                showNotification('Không có từ vựng hợp lệ nào được thêm!', 'error');
+                showNotification('Không có từ vựng hợp lệ!', 'error');
             }
         }
 
@@ -1134,19 +532,37 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
         // Cập nhật danh sách Bộ sưu tập
         function updateCollectionList() {
             const collectionListDiv = document.getElementById('collectionList');
-            if (collections.length === 0) {
-                collectionListDiv.innerHTML = '<p style="text-align: center; color: #666;">Chưa có Bộ sưu tập nào. Hãy thêm từ vựng để tạo!</p>';
+
+            let filtered = collections;
+            if (currentFilter !== 'all') {
+                filtered = collections.filter(c => c.language === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                const noDataMsg = currentFilter === 'all'
+                    ? 'Chưa có Bộ sưu tập nào. Hãy thêm từ vựng để tạo!'
+                    : `Không có Bộ sưu tập nào cho <strong>${currentFilter === 'en-US' ? 'Tiếng Anh' : 'Tiếng Pháp'}</strong>.`;
+                collectionListDiv.innerHTML = `<p style="text-align: center; color: #666;">${noDataMsg}</p>`;
                 return;
             }
 
-            collectionListDiv.innerHTML = collections.map(collection => `
-                <div class="collection-item" onclick="showCollectionWords('${collection.id}')" style="cursor: pointer;">
-                    <span >
-                        <strong>${collection.name}</strong> (${collection.words.length} từ)
-                    </span>
-                    <button class="delete-btn" onclick="deleteCollection('${collection.id}')">Xóa</button>
-                </div>
-            `).join('');
+            collectionListDiv.innerHTML = filtered.map(collection => {
+                const langLabel = collection.language === 'en-US' ? 'Tiếng Anh' : 'Tiếng Pháp';
+                const langIcon = collection.language === 'en-US' ? 'UK Flag' : 'France Flag';
+                const langColor = collection.language === 'en-US' ? '#f56565' : '#48bb78';
+
+                return `
+            <div class="collection-item" onclick="showCollectionWords('${collection.id}')" style="cursor: pointer; border-left: 4px solid ${langColor};">
+                <span>
+                    <strong>${collection.name}</strong> (${collection.words.length} từ)
+                    <small style="margin-left: 8px; color: ${langColor};">
+                        [${langLabel}]
+                    </small>
+                </span>
+                <button class="delete-btn" onclick="event.stopPropagation(); deleteCollection('${collection.id}')">Xóa</button>
+            </div>
+        `;
+            }).join('');
         }
 
         // Hiển thị từ vựng trong Bộ sưu tập qua Modal
@@ -1162,24 +578,34 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             modalWordList.innerHTML = collection.words.length === 0 ?
                 '<p style="text-align: center; color: #666;">Chưa có từ vựng trong Bộ sưu tập này.</p>' :
                 collection.words.map((word, index) => `
-                                        <div class="word-item" id="word-item-${collectionId}-${index}">
+                    <div class="word-item" id="word-item-${collectionId}-${index}">
                         <input type="checkbox" class="word-checkbox" data-collection-id="${collectionId}" data-index="${index}">
                         <span class="word-text"><strong>${word.vietnamese}</strong> → ${word.french}</span>
                         <div>
-                            <button class="edit-btn" onclick="editWord('${collectionId}', ${index})">Sửa</button>
-                            <button class="delete-btn" onclick="deleteWord('${collectionId}', ${index})">Xóa</button>
+                            <button class="play-btn" onclick="speakWord('${word.french.replace(/'/g, "\\'")}', '${collection.language || "fr-FR"}')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg></button>
+                            <button class="edit-btn" onclick="editWord('${collectionId}', ${index})"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></button>
+                            <button class="delete-btn" onclick="deleteWord('${collectionId}', ${index})"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                         </div>
                     </div>
                 `).join('');
 
             modal.style.display = 'flex';
-            // Thêm sự kiện cho checkbox
             document.querySelectorAll('.word-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', updateDeleteSelectedButton);
             });
             updateDeleteSelectedButton();
         }
 
+        // Hàm phát âm
+        function speakWord(text, lang) {
+            if ('speechSynthesis' in window) {
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = lang;
+                speechSynthesis.speak(utter);
+            } else {
+                showNotification('Trình duyệt không hỗ trợ phát âm!', 'error');
+            }
+        }
         // Chỉnh sửa từ vựng
         function editWord(collectionId, index) {
             const collection = collections.find(c => c.id === collectionId);
@@ -1193,8 +619,9 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                     <span> → </span>
                     <input type="text" id="edit-french-${collectionId}-${index}" value="${word.french}">
                     <div>
-                        <button class="btn btn-success" onclick="saveWord('${collectionId}', ${index})">Lưu</button>
-                        <button class="btn btn-danger" onclick="showCollectionWords('${collectionId}')">Hủy</button>
+                        <button class="play-btn btn-success" onclick="saveWord('${collectionId}', ${index})"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg></button>
+                        
+                        <button class="delete-btn btn-danger" onclick="showCollectionWords('${collectionId}')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></button>
                     </div>
                 </div>
             `;
@@ -1348,8 +775,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
         }
 
         // Hiển thị từ tiếp theo
-                // Hiển thị từ tiếp theo
-                function showNextWord() {
+        function showNextWord() {
             if (!isGameRunning || currentWordIndex >= currentGameWords.length) {
                 stopGame();
                 showNotification('Đã hoàn thành tất cả từ vựng!', 'success');
@@ -1395,10 +821,9 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
                 }, answerDisplayTime);
             }
         }
-        
+
         // Hiển thị đáp án của từ hiện tại
-                // Hiển thị đáp án của từ hiện tại
-                function showCurrentAnswer() {
+        function showCurrentAnswer() {
             if (!isGameRunning || currentWordIndex >= currentGameWords.length) return;
 
             const currentWord = currentGameWords[currentWordIndex];
@@ -1447,6 +872,7 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
             if (savedCollections) {
                 collections = JSON.parse(savedCollections);
                 collections.forEach(c => {
+                    if (!c.language) c.language = 'fr-FR'; // Default nếu thiếu
                     c.words.forEach(w => {
                         if (!words.some(wd => wd.vietnamese === w.vietnamese && wd.french === w.french)) {
                             words.push(w);
@@ -1534,96 +960,116 @@ Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
         }
 
         // Thiết lập file input TXT
-function setupTxtFileInput() {
-    const txtFileInput = document.getElementById('txtFileInput');
-    txtFileInput.addEventListener('change', handleTxtFileSelect);
-}
+        function setupTxtFileInput() {
+            const txtFileInput = document.getElementById('txtFileInput');
+            txtFileInput.addEventListener('change', handleTxtFileSelect);
+        }
 
-// Xử lý file TXT
-function handleTxtFileSelect(event) {
-    const file = event.target.files[0];
-    if (!file || file.type !== 'text/plain') {
-        showNotification('Vui lòng chọn file .txt hợp lệ!', 'error');
-        return;
-    }
+        // Tự động phát hiện ngôn ngữ: Anh hay Pháp
+        function detectLanguage(text) {
+            const sample = text.toLowerCase().replace(/[^a-zà-ÿ\s]/g, ' ').trim();
+            if (!sample) return 'fr-FR'; // Mặc định
 
-    const collectionSelect = document.getElementById('collectionSelect').value;
-    const newCollectionName = document.getElementById('newCollectionName').value.trim();
+            const words = sample.split(/\s+/).filter(w => w.length > 2);
 
-    let collectionId = collectionSelect;
+            // Từ điển nhỏ (các từ phổ biến)
+            const englishWords = new Set(['the', 'and', 'is', 'are', 'of', 'in', 'to', 'for', 'with', 'on', 'at', 'by', 'an', 'be', 'this', 'that', 'have', 'it', 'not', 'you', 'he', 'she', 'we', 'they', 'but', 'or', 'as', 'what', 'which', 'who', 'when', 'where', 'why', 'how']);
+            const frenchWords = new Set(['le', 'la', 'les', 'de', 'des', 'un', 'une', 'et', 'est', 'sont', 'dans', 'pour', 'avec', 'sur', 'par', 'je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles', 'mais', 'ou', 'comme', 'que', 'qui', 'quoi', 'quand', 'où', 'pourquoi', 'comment', 'ce', 'cette', 'ces']);
 
-    // BẮT BUỘC: phải chọn hoặc tạo mới collection
-    if (!collectionSelect && !newCollectionName) {
-        showNotification('Vui lòng chọn hoặc tạo mới Bộ sưu tập trước khi import TXT!', 'error');
-        document.getElementById('txtFileInput').value = '';
-        return;
-    }
+            let engCount = 0, frCount = 0;
 
-    if (newCollectionName && !collectionSelect) {
-        collectionId = Date.now().toString();
-        collections.push({
-            id: collectionId,
-            name: newCollectionName,
-            words: []
-        });
-        showNotification(`Đã tạo Bộ sưu tập mới: ${newCollectionName}`, 'success');
-    }
+            words.forEach(word => {
+                if (englishWords.has(word)) engCount++;
+                if (frenchWords.has(word)) frCount++;
+            });
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const text = e.target.result;
-        const lines = text.split('\n');
-        let addedCount = 0;
+            // Ưu tiên từ điển
+            if (engCount > frCount && engCount > 0) return 'en-US';
+            if (frCount > engCount && frCount > 0) return 'fr-FR';
 
-        lines.forEach(line => {
-            const trimmed = line.trim();
-            if (!trimmed) return;
+            // Nếu từ điển không đủ, dùng regex
+            const engPattern = /\b(th|ing|ed|tion|ly|ness|the|and|is)\b/i;
+            const frPattern = /\b(de|le|la|des|un|une|je|tu|il|au|aux|à|ç|é|è|ê|ô)\b/i;
 
-            const parts = trimmed.split(':');
-            if (parts.length !== 2) {
-                console.warn(`Dòng không hợp lệ (bỏ qua): ${trimmed}`);
+            const engMatches = (sample.match(engPattern) || []).length;
+            const frMatches = (sample.match(frPattern) || []).length;
+
+            return engMatches >= frMatches ? 'en-US' : 'fr-FR';
+        }
+
+        // Xử lý file TXT
+        function handleTxtFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file || file.type !== 'text/plain') {
+                showNotification('Vui lòng chọn file .txt hợp lệ!', 'error');
                 return;
             }
 
-            const vietnamese = parts[0].trim();
-            const french = parts[1].trim();
+            const collectionSelect = document.getElementById('collectionSelect').value;
+            const newCollectionName = document.getElementById('newCollectionName').value.trim();
 
-            if (!vietnamese || !french) return;
+            if (!collectionSelect && !newCollectionName) {
+                showNotification('Vui lòng chọn hoặc tạo mới Bộ sưu tập!', 'error');
+                return;
+            }
 
-            const word = { vietnamese, french };
-            const collection = collections.find(c => c.id === collectionId);
-            if (collection) {
-                if (!collection.words.some(w => w.vietnamese === vietnamese && w.french === french)) {
-                    collection.words.push(word);
-                    addedCount++;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const text = e.target.result;
+                let detectedLanguage = detectLanguage(text); // Tự động detect
+
+                let collectionId = collectionSelect;
+                if (newCollectionName && !collectionSelect) {
+                    collectionId = Date.now().toString();
+                    collections.push({
+                        id: collectionId,
+                        name: newCollectionName,
+                        words: [],
+                        language: detectedLanguage
+                    });
+                    showNotification(`Tạo mới: ${newCollectionName} [${detectedLanguage === 'en-US' ? 'Tiếng Anh' : 'Tiếng Pháp'}]`, 'success');
                 }
-            }
 
-            // Cập nhật danh sách tổng (tránh trùng)
-            if (!words.some(w => w.vietnamese === vietnamese && w.french === french)) {
-                words.push(word);
-            }
-        });
+                const lines = text.split('\n');
+                let addedCount = 0;
+                lines.forEach(line => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return;
+                    const parts = trimmed.split(':');
+                    if (parts.length !== 2) return;
+                    const vietnamese = parts[0].trim();
+                    const target = parts[1].trim();
+                    if (!vietnamese || !target) return;
 
-        if (addedCount > 0) {
-            saveCollections();
-            saveWords();
-            updateCollectionList();
-            updateCollectionSelects();
-            updateStats();
-            showNotification(`Đã thêm ${addedCount} từ vựng từ file TXT!`, 'success');
-            showTab('collection');
-        } else {
-            showNotification('Không có từ vựng hợp lệ nào trong file TXT!', 'warning');
+                    const word = { vietnamese, french: target };
+                    const collection = collections.find(c => c.id === collectionId);
+                    if (collection && !collection.words.some(w => w.vietnamese === vietnamese && w.french === target)) {
+                        collection.words.push(word);
+                        addedCount++;
+                    }
+                    if (!words.some(w => w.vietnamese === vietnamese && w.french === target)) {
+                        words.push(word);
+                    }
+                });
+
+                if (addedCount > 0) {
+                    saveCollections();
+                    saveWords();
+                    updateCollectionList();
+                    updateCollectionSelects();
+                    updateStats();
+                    showNotification(`Đã thêm ${addedCount} từ vựng từ file!`, 'success');
+                    showTab('collection');
+                } else {
+                    showNotification('Không có từ vựng hợp lệ!', 'warning');
+                }
+
+                document.getElementById('txtFileInput').value = '';
+                document.getElementById('newCollectionName').value = '';
+            };
+
+            reader.readAsText(file, 'UTF-8');
         }
-
-        // Reset input
-        document.getElementById('txtFileInput').value = '';
-        document.getElementById('newCollectionName').value = '';
-    };
-
-    reader.readAsText(file, 'UTF-8');
-}
 
         // Xử lý file được chọn
         function handleFileSelect(event) {
