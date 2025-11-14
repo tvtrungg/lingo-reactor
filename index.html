@@ -914,23 +914,19 @@ Today’s theme: ${theme}`;
 
             if (gameMode === 'vietnamese-to-target') {
                 answerHTML = `
-                    <div class="answer-vietnamese">${currentWord.vietnamese}</div>
                     <div class="answer-french">${currentWord.french}</div>
                 `;
             } else if (gameMode === 'target-to-vietnamese') {
                 answerHTML = `
                     <div class="answer-french">${currentWord.french}</div>
-                    <div class="answer-vietnamese">${currentWord.vietnamese}</div>
                 `;
             } else { // mixed mode
                 if (currentDisplay === currentWord.vietnamese) {
                     answerHTML = `
                         <div class="answer-french">${currentWord.french}</div>
-                        <div class="answer-vietnamese">${currentWord.vietnamese}</div>
                     `;
                 } else {
                     answerHTML = `
-                        <div class="answer-vietnamese">${currentWord.vietnamese}</div>
                         <div class="answer-french">${currentWord.french}</div>
                     `;
                 }
