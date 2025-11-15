@@ -24,7 +24,7 @@
     <meta name="google-site-verification" content="pC6M7jj2zF1WIk5kXR6nj-sYkHiNmHnIyD_Tn-ZXos4" />
 
     <!-- FAVICON -->
-     
+
     <link rel="icon" type="image/x-icon" href="/assets/favicon/favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon/apple-icon-60x60.png">
@@ -93,7 +93,7 @@
 <body>
     <div class="container">
         <h1>Phản xạ ngôn ngữ</h1>
-        <i class="logo">(tvtrung)</i>
+        <i class="logo">(tvt)</i>
 
         <div class="tab-buttons">
             <button class="tab-btn active" onclick="showTab('setup')">Thiết lập</button>
@@ -117,32 +117,34 @@
                     <input type="text" id="newCollectionName" placeholder="Nhập tên Bộ sưu tập mới">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="wordInput">Nhập từ vựng (mỗi dòng: Tiếng Việt : Tiếng Anh/Pháp):</label>
-                <textarea id="wordInput" placeholder="Ví dụ:
+            <div class="form-group-input">
+                <div class="form-group">
+                    <label for="wordInput">Nhập từ vựng (mỗi dòng: Tiếng Việt : Tiếng Anh/Pháp):</label>
+                    <textarea id="wordInput" placeholder="Ví dụ:
 Xin chào : Hello hoặc Bonjour
 Tạm biệt : Goodbye hoặc Au revoir
 Cảm ơn : Thank you hoặc Merci
 Xin lỗi : Sorry hoặc Excusez-moi
 Tôi yêu bạn : I love you hoặc Je t'aime"></textarea>
-            </div>
-
-            <div class="form-group-wrapper">
-                <div class="form-group">
-                    <label>Hoặc tải file TXT</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="txtFileInput" accept=".txt">
-                        <span>📁 Chọn file TXT hoặc kéo thả vào đây</span>
-                    </div>
-                    <p style="font-size: 0.85em; color: #666; margin-top: 5px;">
-                        Định dạng: <code>Tiếng Việt : Tiếng Anh/Pháp</code> (mỗi dòng 1 cặp)
-                    </p>
                 </div>
-                <div class="form-group">
-                    <label>Hoặc tải file JSON:</label>
-                    <div class="file-input-wrapper">
-                        <input type="file" id="fileInput" accept=".json">
-                        <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
+
+                <div class="form-group form-group-file">
+                    <div class="form-group">
+                        <label>Hoặc tải file TXT</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="txtFileInput" accept=".txt">
+                            <span>📁 Chọn file TXT hoặc kéo thả vào đây</span>
+                        </div>
+                        <p style="font-size: 0.85em; color: #666; margin-top: 5px;">
+                            Định dạng: <code>Tiếng Việt : Tiếng Anh/Pháp</code> (mỗi dòng 1 cặp)
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label>Hoặc tải file JSON:</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="fileInput" accept=".json">
+                            <span>📁 Chọn file JSON hoặc kéo thả vào đây</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1245,4 +1247,5 @@ Today’s theme: ${theme}`;
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
+
 </html>

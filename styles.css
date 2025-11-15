@@ -48,18 +48,18 @@ h1 {
   gap: 20px;
 }
 
-.form-group-wrapper {
+.form-group-input{
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-.form-group-wrapper .form-group {
+.form-group-input .form-group {
   flex: 1;
 }
 
-.create-collection .form-group {
-  flex: 1;
+.form-group-file {
+  flex-direction: row;
 }
 
 .tab-buttons {
@@ -130,7 +130,7 @@ select:focus {
 
 textarea {
   resize: vertical;
-  min-height: 148px;
+  min-height: 200px;
 }
 
 .btn {
@@ -685,6 +685,26 @@ button .lucide-icon{
   border-left: 4px solid #48bb78;
 }
 
+@media(max-width: 1024px) {
+  .form-group-input{
+    flex-direction: column;
+  }
+
+  .form-group-input textarea{
+    min-height: 152px;
+  }
+
+  .form-group-file{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .form-group-input .form-group {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 20px;
@@ -695,8 +715,15 @@ button .lucide-icon{
     font-size: 1.5em;
   }
 
+  
+  .form-group-file{
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .tab-buttons {
     flex-wrap: wrap;
+    justify-content: start;
   }
 
   .settings-grid {
